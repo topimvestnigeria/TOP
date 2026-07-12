@@ -762,3 +762,280 @@ a{
     }
 
 }
+
+
+
+/* ==========================
+   TOP PREMIUM DASHBOARD
+========================== */
+
+
+.top-header{
+
+    background:linear-gradient(135deg,#000,#1a1a1a);
+
+    color:white;
+
+    padding:18px 20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+.top-header .logo{
+
+    font-size:35px;
+
+    font-weight:bold;
+
+    color:#d4af37;
+
+}
+
+
+
+.header-icons{
+
+    display:flex;
+
+    gap:18px;
+
+    font-size:22px;
+
+}
+
+
+.header-icons i{
+
+    color:#d4af37;
+
+}
+
+
+
+
+.balance-card{
+
+    background:linear-gradient(135deg,#111,#2c2c2c);
+
+    color:white;
+
+    margin:20px;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+}
+
+
+
+.balance-card p{
+
+    color:#ccc;
+
+}
+
+
+
+.balance-card h1{
+
+    color:#d4af37;
+
+    font-size:42px;
+
+    margin:15px 0;
+
+}
+
+
+
+.balance-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+
+
+.deposit-btn,
+.withdraw-btn{
+
+
+    flex:1;
+
+    border:none;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+
+.deposit-btn{
+
+    background:#d4af37;
+
+    color:#000;
+
+}
+
+
+
+.withdraw-btn{
+
+    background:white;
+
+    color:#000;
+
+}
+
+
+
+
+.menu-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:15px;
+
+    padding:20px;
+
+}
+
+
+
+.menu-item{
+
+
+    background:#111;
+
+    color:white;
+
+    padding:25px 10px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+    transition:.3s;
+
+}
+
+
+
+.menu-item:hover{
+
+    transform:translateY(-5px);
+
+}
+
+
+
+.menu-item i{
+
+    font-size:35px;
+
+    color:#d4af37;
+
+    margin-bottom:12px;
+
+}
+
+
+
+.menu-item p{
+
+    font-weight:bold;
+
+    margin:0;
+
+}
+
+
+
+
+
+.referral-card{
+
+    background:linear-gradient(135deg,#d4af37,#f5d76e);
+
+    color:#000;
+
+}
+
+
+
+
+
+.bottom-nav{
+
+    background:#111;
+
+}
+
+
+
+.nav-item{
+
+    color:#aaa;
+
+}
+
+
+
+.nav-item i{
+
+    color:#d4af37;
+
+}
+
+
+
+.nav-item.active{
+
+    color:#d4af37;
+
+}
+
+
+
+@media(max-width:600px){
+
+
+.menu-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+
+.balance-buttons{
+
+flex-direction:column;
+
+}
+
+
+}
