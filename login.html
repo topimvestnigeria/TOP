@@ -2,44 +2,104 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>TOP | Login</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
 <body>
 
     <div class="login-box">
 
+        <div class="logo">
+            TOP
+        </div>
+
         <h2>Welcome Back</h2>
+
+        <p class="subtitle">
+            Sign in to access your investment dashboard.
+        </p>
 
         <input
             type="email"
             id="email"
             placeholder="Email Address"
-            autocomplete="email"
-        >
+            autocomplete="email">
 
         <input
             type="password"
             id="password"
             placeholder="Password"
-            autocomplete="current-password"
-        >
+            autocomplete="current-password">
 
-        <button id="loginBtn" class="btn">
+        <div class="checkbox">
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="showPassword">
+
+                Show Password
+
+            </label>
+
+        </div>
+
+        <button
+            id="loginBtn"
+            class="btn">
+
             Login
+
         </button>
 
         <p>
+
             Don't have an account?
-            <a href="signup.html">Register</a>
+
+            <a href="signup.html">
+
+                Register
+
+            </a>
+
+        </p>
+
+        <p>
+
+            <a href="index.html">
+
+                ← Back to Home
+
+            </a>
+
         </p>
 
     </div>
+
+    <script>
+
+        const showPassword =
+            document.getElementById("showPassword");
+
+        showPassword.addEventListener("change", () => {
+
+            document.getElementById("password").type =
+                showPassword.checked ? "text" : "password";
+
+        });
+
+    </script>
 
     <script type="module" src="login.js"></script>
 
