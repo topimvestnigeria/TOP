@@ -2,41 +2,116 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TOP | Deposit</title>
+    <title>TOP | Deposit Funds</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
 <body>
 
     <div class="login-box">
 
+        <div class="logo">
+            TOP
+        </div>
+
         <h2>Deposit Funds</h2>
+
+        <p class="subtitle">
+
+            Fund your wallet using Bank Transfer or USDT.
+
+        </p>
+
+
+        <!-- PAYMENT DETAILS -->
 
         <div class="payment-box">
 
-            <h3>Bank Transfer</h3>
+            <h3>
 
-            <p><strong>Bank:</strong> Opay</p>
+                <i class="fa-solid fa-building-columns"></i>
 
-            <p><strong>Account Name:</strong> TOP Investment</p>
+                Bank Transfer
 
-            <p><strong>Account Number:</strong> 8123456789</p>
+            </h3>
+
+            <p>
+
+                <strong>Bank:</strong>
+
+                Opay
+
+            </p>
+
+            <p>
+
+                <strong>Account Name:</strong>
+
+                TOP Investment Nigeria
+
+            </p>
+
+            <p>
+
+                <strong>Account Number:</strong>
+
+                <span id="bankAccount">
+
+                    8123456789
+
+                </span>
+
+            </p>
+
+            <button
+                class="btn"
+                id="copyBankBtn">
+
+                Copy Account Number
+
+            </button>
 
             <hr>
 
-            <h3>USDT (TRC20)</h3>
+            <h3>
+
+                <i class="fa-brands fa-bitcoin"></i>
+
+                USDT (TRC20)
+
+            </h3>
 
             <p id="walletAddress">
+
                 TQExampleWalletAddress123456789
+
             </p>
+
+            <button
+                class="btn"
+                id="copyWalletBtn">
+
+                Copy Wallet Address
+
+            </button>
 
         </div>
 
-        <label for="amount">Amount (₦)</label>
+
+        <label>
+
+            Deposit Amount (₦)
+
+        </label>
 
         <input
             type="number"
@@ -44,30 +119,100 @@
             placeholder="Enter amount"
             min="1">
 
-        <label for="method">Payment Method</label>
+
+        <label>
+
+            Payment Method
+
+        </label>
 
         <select id="method">
 
-            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Bank Transfer">
 
-            <option value="USDT (TRC20)">USDT (TRC20)</option>
+                Bank Transfer
+
+            </option>
+
+            <option value="USDT (TRC20)">
+
+                USDT (TRC20)
+
+            </option>
 
         </select>
 
-        <label for="reference">Transaction Reference</label>
+
+        <label>
+
+            Transaction Reference
+
+        </label>
 
         <input
             type="text"
             id="reference"
             placeholder="Enter transaction reference">
 
-        <button id="depositBtn" class="btn">
+
+        <button
+            id="depositBtn"
+            class="btn">
+
             Submit Deposit Request
+
         </button>
+
 
         <p id="status"></p>
 
+        <br>
+
+        <a
+            href="dashboard.html"
+            class="btn">
+
+            ← Back to Dashboard
+
+        </a>
+
     </div>
+
+
+    <script>
+
+        // Copy Bank Account
+
+        document.getElementById("copyBankBtn")
+            .addEventListener("click", async () => {
+
+                await navigator.clipboard.writeText(
+
+                    document.getElementById("bankAccount").innerText
+
+                );
+
+                alert("Bank account copied!");
+
+            });
+
+
+        // Copy Wallet
+
+        document.getElementById("copyWalletBtn")
+            .addEventListener("click", async () => {
+
+                await navigator.clipboard.writeText(
+
+                    document.getElementById("walletAddress").innerText
+
+                );
+
+                alert("Wallet address copied!");
+
+            });
+
+    </script>
 
     <script type="module" src="deposit.js"></script>
 
