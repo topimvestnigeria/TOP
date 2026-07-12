@@ -12,26 +12,92 @@
 
 <body>
 
-    <div class="login-box">
 
-        <h2>Withdraw Funds</h2>
+<div class="login-box">
 
-        <label for="amount">Amount (₦)</label>
+    <h2>Withdraw Funds</h2>
 
-        <input
-            type="number"
-            id="amount"
-            placeholder="Enter amount"
-            min="1">
 
-        <label for="bank">Bank Name</label>
+    <!-- Saved Bank Account -->
 
-        <input
-            type="text"
-            id="bank"
-            placeholder="Enter bank name">
+    <div id="savedBankBox" style="display:none;">
 
-        <label for="accountNumber">Account Number</label>
+        <h3>Saved Bank Account</h3>
+
+        <p>
+            <strong>Bank:</strong>
+            <span id="savedBank"></span>
+        </p>
+
+        <p>
+            <strong>Account Name:</strong>
+            <span id="savedName"></span>
+        </p>
+
+        <p>
+            <strong>Account Number:</strong>
+            <span id="savedNumber"></span>
+        </p>
+
+
+        <button id="changeBankBtn" class="btn">
+            Change Bank Account
+        </button>
+
+    </div>
+
+
+
+    <!-- New Bank Form -->
+
+    <div id="bankForm">
+
+
+        <label>
+            Bank Name
+        </label>
+
+        <select id="bank">
+
+            <option value="">
+                Select Bank
+            </option>
+
+            <option>
+                Access Bank
+            </option>
+
+            <option>
+                GTBank
+            </option>
+
+            <option>
+                First Bank
+            </option>
+
+            <option>
+                Zenith Bank
+            </option>
+
+            <option>
+                UBA
+            </option>
+
+            <option>
+                Opay
+            </option>
+
+            <option>
+                PalmPay
+            </option>
+
+        </select>
+
+
+
+        <label>
+            Account Number
+        </label>
 
         <input
             type="text"
@@ -39,22 +105,59 @@
             placeholder="Enter account number"
             inputmode="numeric">
 
-        <label for="accountName">Account Name</label>
+
+
+        <label>
+            Account Name
+        </label>
 
         <input
             type="text"
             id="accountName"
             placeholder="Enter account name">
 
-        <button id="withdrawBtn" class="btn">
-            Submit Withdrawal
+
+
+        <button id="saveBankBtn" class="btn">
+            Save Bank Account
         </button>
 
-        <p id="status"></p>
 
     </div>
 
-    <script type="module" src="withdraw.js"></script>
+
+
+    <hr>
+
+
+    <label>
+        Withdrawal Amount (₦)
+    </label>
+
+
+    <input
+        type="number"
+        id="amount"
+        placeholder="Enter amount"
+        min="1">
+
+
+
+    <button id="withdrawBtn" class="btn">
+        Submit Withdrawal
+    </button>
+
+
+
+    <p id="status"></p>
+
+
+</div>
+
+
+
+<script type="module" src="withdraw.js"></script>
+
 
 </body>
 
