@@ -11,7 +11,7 @@ import {
 
 let currentUser = null;
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, (user) => {
 
     if (!user) {
         window.location.href = "login.html";
@@ -45,12 +45,23 @@ document.querySelectorAll(".investBtn").forEach((button) => {
         const amount = Number(button.dataset.amount);
         const dailyProfit = Number(button.dataset.profit);
 
-        console.log(planName);
-        console.log(amount);
-        console.log(dailyProfit);
+        // Check wallet balance
+        if (Number(userData.balance) < amount) {
+            alert("Insufficient wallet balance.");
+            return;
+        }
 
+        // Temporary confirmation
         alert(
-            `Plan: ${planName}\nInvestment: ₦${amount.toLocaleString()}\nDaily Profit: ₦${dailyProfit.toLocaleString()}`
+            `Plan: ${planName}
+
+Investment: ₦${amount.toLocaleString()}
+
+Daily Profit: ₦${dailyProfit.toLocaleString()}
+
+Wallet Balance: ₦${Number(userData.balance).toLocaleString()}
+
+The investment system will be activated in the next step.`
         );
 
     });
