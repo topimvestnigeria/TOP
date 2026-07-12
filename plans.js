@@ -6,7 +6,13 @@ import {
 
 import {
     doc,
-    getDoc
+    getDoc,
+    updateDoc,
+    addDoc,
+    collection,
+    query,
+    where,
+    getDocs
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 let currentUser = null;
@@ -26,43 +32,70 @@ document.querySelectorAll(".investBtn").forEach((button) => {
 
     button.addEventListener("click", async () => {
 
-        if (!currentUser) {
-            alert("Please login first.");
-            return;
+        try {
+
+            if (!currentUser) {
+                alert("Please login first.");
+                return;
+            }
+
+            const planName = button.dataset.name;
+            const amount = Number(button.dataset.amount);
+            const dailyProfit = Number(button.dataset.profit);
+
+            const userRef = doc(db, "users", currentUser.uid);
+            const userSnap = await getDoc(userRef);
+
+            if (!userSnap.exists()) {
+                alert("User not found.");
+                return;
+            }
+
+            const userData = userSnap.data();
+
+            if (Number(userData.balance) < amount) {
+                alert("Insufficient wallet balance.");
+                return;
+            }
+
+            const investmentQuery = query(
+                collection(db, "investments"),
+                where("userId", "==", currentUser.uid),
+                where("status", "==", "Active")
+            );
+
+            const investmentSnapshot = await getDocs(investmentQuery);
+
+            if (!investmentSnapshot.empty) {
+                alert("You already have an active investment.");
+                return;
+            }
+
+            await updateDoc(userRef, {
+                balance: Number(userData.balance) - amount
+            });
+
+            await addDoc(collection(db, "investments"), {
+                userId: currentUser.uid,
+                email: currentUser.email,
+                planName: planName,
+                investmentAmount: amount,
+                dailyProfit: dailyProfit,
+                status: "Active",
+                startDate: new Date().toISOString(),
+                lastProfitDate: null
+            });
+
+            alert("Investment activated successfully!");
+
+            window.location.href = "dashboard.html";
+
+        } catch (error) {
+
+            alert(error.message);
+            console.log(error);
+
         }
-
-        const userRef = doc(db, "users", currentUser.uid);
-        const userSnap = await getDoc(userRef);
-
-        if (!userSnap.exists()) {
-            alert("User not found.");
-            return;
-        }
-
-        const userData = userSnap.data();
-
-        const planName = button.dataset.name;
-        const amount = Number(button.dataset.amount);
-        const dailyProfit = Number(button.dataset.profit);
-
-        // Check wallet balance
-        if (Number(userData.balance) < amount) {
-            alert("Insufficient wallet balance.");
-            return;
-        }
-
-        // Temporary confirmation
-        alert(
-            `Plan: ${planName}
-
-Investment: ₦${amount.toLocaleString()}
-
-Daily Profit: ₦${dailyProfit.toLocaleString()}
-
-Wallet Balance: ₦${Number(userData.balance).toLocaleString()}
-
-The investment system will be activated in the next step.`
-        );
 
     });
 
