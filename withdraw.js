@@ -16,69 +16,76 @@ import {
 let currentUser = null;
 
 
+// ============================
 // Elements
+// ============================
 
 const bankForm = document.getElementById("bankForm");
+
 const savedBankBox = document.getElementById("savedBankBox");
 
 const saveBankBtn = document.getElementById("saveBankBtn");
+
 const changeBankBtn = document.getElementById("changeBankBtn");
 
+const withdrawBtn = document.getElementById("withdrawBtn");
 
 
-// Check user login
+// ============================
+// LOGIN CHECK
+// ============================
 
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
+
         window.location.href = "login.html";
+
         return;
+
     }
 
     currentUser = user;
 
-    loadBankAccount();
+    await loadBankAccount();
 
 });
 
 
 
 
-// Load saved bank
+// ============================
+// LOAD BANK
+// ============================
 
-async function loadBankAccount(){
+async function loadBankAccount() {
 
-    const userRef = doc(db,"users",currentUser.uid);
+    const userRef = doc(db, "users", currentUser.uid);
 
     const snap = await getDoc(userRef);
 
+    if (!snap.exists()) return;
 
-    if(snap.exists()){
+    const data = snap.data();
 
-        const data = snap.data();
+    if (
+        data.bankName &&
+        data.accountNumber &&
+        data.accountName
+    ) {
 
+        document.getElementById("savedBank").innerText =
+            data.bankName;
 
-        if(
-            data.bankName &&
-            data.accountNumber &&
-            data.accountName
-        ){
+        document.getElementById("savedName").innerText =
+            data.accountName;
 
-            document.getElementById("savedBank").innerText =
-                data.bankName;
+        document.getElementById("savedNumber").innerText =
+            data.accountNumber;
 
-            document.getElementById("savedName").innerText =
-                data.accountName;
+        savedBankBox.style.display = "block";
 
-            document.getElementById("savedNumber").innerText =
-                data.accountNumber;
-
-
-            savedBankBox.style.display = "block";
-
-            bankForm.style.display = "none";
-
-        }
+        bankForm.style.display = "none";
 
     }
 
@@ -86,124 +93,149 @@ async function loadBankAccount(){
 
 
 
+// ============================
+// SAVE BANK
+// ============================
 
-// Save bank account
+saveBankBtn.addEventListener("click", async () => {
 
-saveBankBtn.addEventListener("click", async()=>{
+    try {
 
+        saveBankBtn.disabled = true;
 
-    const bank =
-    document.getElementById("bank").value;
+        const bank =
+            document.getElementById("bank").value;
 
+        const accountNumber =
+            document.getElementById("accountNumber").value.trim();
 
-    const accountNumber =
-    document.getElementById("accountNumber").value.trim();
-
-
-    const accountName =
-    document.getElementById("accountName").value.trim();
-
+        const accountName =
+            document.getElementById("accountName").value.trim();
 
 
-    if(!bank || !accountNumber || !accountName){
+        if (!bank || !accountNumber || !accountName) {
 
-        alert("Complete bank information.");
+            throw new Error("Please complete all bank details.");
 
-        return;
+        }
+
+        if (accountNumber.length !== 10) {
+
+            throw new Error("Account number must be exactly 10 digits.");
+
+        }
+
+        await updateDoc(
+
+            doc(db, "users", currentUser.uid),
+
+            {
+
+                bankName: bank,
+
+                accountNumber: accountNumber,
+
+                accountName: accountName
+
+            }
+
+        );
+
+        alert("Bank account saved successfully.");
+
+        location.reload();
 
     }
 
+    catch (error) {
 
+        alert(error.message);
 
-    await updateDoc(
-        doc(db,"users",currentUser.uid),
-        {
+    }
 
-            bankName: bank,
+    finally {
 
-            accountNumber: accountNumber,
+        saveBankBtn.disabled = false;
 
-            accountName: accountName
-
-        }
-    );
-
-
-    alert("Bank account saved successfully.");
-
-
-    location.reload();
-
+    }
 
 });
 
 
 
 
-// Change bank
+// ============================
+// CHANGE BANK
+// ============================
 
-changeBankBtn.addEventListener("click",()=>{
+changeBankBtn.addEventListener("click", () => {
 
-    savedBankBox.style.display="none";
+    savedBankBox.style.display = "none";
 
-    bankForm.style.display="block";
+    bankForm.style.display = "block";
 
 });
 
 
 
 
+// ============================
+// SUBMIT WITHDRAWAL
+// ============================
 
-// Submit withdrawal
+withdrawBtn.addEventListener("click", async () => {
 
-document.getElementById("withdrawBtn")
-.addEventListener("click", async()=>{
+    try {
 
+        withdrawBtn.disabled = true;
 
-    try{
+        const amount = Number(
 
+            document.getElementById("amount").value
 
-        const amount =
-        Number(document.getElementById("amount").value);
-
-
-
-        const userSnap =
-        await getDoc(
-            doc(db,"users",currentUser.uid)
         );
 
+
+        if (isNaN(amount) || amount <= 0) {
+
+            throw new Error("Please enter a valid withdrawal amount.");
+
+        }
+
+
+        const userRef = doc(db, "users", currentUser.uid);
+
+        const userSnap = await getDoc(userRef);
 
         const userData = userSnap.data();
 
 
+        if (
 
-        if(
             !userData.bankName ||
+
             !userData.accountNumber ||
+
             !userData.accountName
-        ){
 
-            alert("Please save your bank account first.");
+        ) {
 
-            return;
-
-        }
-
-
-
-        if(amount <=0){
-
-            alert("Enter a valid amount.");
-
-            return;
+            throw new Error("Please save your bank account first.");
 
         }
 
+
+        if (Number(userData.balance) < amount) {
+
+            throw new Error("Insufficient wallet balance.");
+
+        }
 
 
         await addDoc(
-            collection(db,"withdrawRequests"),
+
+            collection(db, "withdrawRequests"),
+
             {
 
                 userId: currentUser.uid,
@@ -218,32 +250,36 @@ document.getElementById("withdrawBtn")
 
                 accountName: userData.accountName,
 
-                status:"Pending",
+                status: "Pending",
 
-                createdAt:new Date().toISOString()
+                createdAt: new Date().toISOString()
 
             }
+
         );
 
 
+        document.getElementById("status").innerHTML =
 
-        document.getElementById("status").innerText =
-        "✅ Withdrawal request submitted successfully!";
-
-
-
-        document.getElementById("amount").value="";
+            "✅ Withdrawal request submitted successfully.<br><br>Please wait for admin approval.";
 
 
+        document.getElementById("amount").value = "";
 
     }
-    catch(error){
 
-        console.log(error);
+    catch (error) {
+
+        console.error(error);
 
         alert(error.message);
 
     }
 
+    finally {
+
+        withdrawBtn.disabled = false;
+
+    }
 
 });
