@@ -6,11 +6,7 @@ import {
 
 import {
     doc,
-    getDoc,
-    collection,
-    query,
-    where,
-    getDocs
+    getDoc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
@@ -44,13 +40,16 @@ onAuthStateChanged(auth, async (user) => {
 
         const data = userSnap.data();
 
+
+        // ==========================
+        // WELCOME MESSAGE
+        // ==========================
+
         document.getElementById("welcomeUser").innerText =
             `Welcome, ${data.fullname} 👋`;
 
         document.getElementById("balance").innerText =
-            "₦" + Number(data.balance).toLocaleString();
-
-
+            "₦" + Number(data.balance || 0).toLocaleString();
 
 
         // ==========================
@@ -68,7 +67,6 @@ onAuthStateChanged(auth, async (user) => {
         }
 
 
-
         const copyBtn =
             document.getElementById("copyReferralBtn");
 
@@ -82,9 +80,11 @@ onAuthStateChanged(auth, async (user) => {
                         data.referralCode || ""
                     );
 
-                    alert("Referral code copied!");
+                    alert("Referral code copied successfully!");
 
-                } catch {
+                }
+
+                catch {
 
                     alert("Unable to copy referral code.");
 
@@ -93,8 +93,6 @@ onAuthStateChanged(auth, async (user) => {
             });
 
         }
-
-
 
 
         // ==========================
@@ -106,20 +104,7 @@ onAuthStateChanged(auth, async (user) => {
 
         if (investmentContainer) {
 
-            const investmentQuery = query(
-
-                collection(db, "investments"),
-
-                where("userId", "==", user.uid),
-
-                where("status", "==", "Active")
-
-            );
-
-            const investmentSnapshot =
-                await getDocs(investmentQuery);
-
-            if (investmentSnapshot.empty) {
+            if (!data.activePlan) {
 
                 investmentContainer.innerHTML = `
 
@@ -131,41 +116,55 @@ onAuthStateChanged(auth, async (user) => {
 
             else {
 
-                investmentSnapshot.forEach((document) => {
+                investmentContainer.innerHTML = `
 
-                    const investment = document.data();
+                    <div class="transaction-card">
 
-                    investmentContainer.innerHTML = `
+                        <h3>${data.activePlan.planName}</h3>
 
-                        <div class="transaction-card">
+                        <p>
 
-                            <h3>${investment.planName}</h3>
+                            <strong>Investment:</strong>
 
-                            <p>
-                                <strong>Investment:</strong>
+                            ₦${Number(data.activePlan.investmentAmount).toLocaleString()}
 
-                                ₦${Number(investment.investmentAmount).toLocaleString()}
-                            </p>
+                        </p>
 
-                            <p>
-                                <strong>Daily Profit:</strong>
+                        <p>
 
-                                ₦${Number(investment.dailyProfit).toLocaleString()}
-                            </p>
+                            <strong>Daily Profit:</strong>
 
-                            <p>
+                            ₦${Number(data.activePlan.dailyProfit).toLocaleString()}
 
-                                <strong>Status:</strong>
+                        </p>
 
-                                🟢 ${investment.status}
+                        <p>
 
-                            </p>
+                            <strong>Total Profit:</strong>
 
-                        </div>
+                            ₦${Number(data.activePlan.totalProfit || 0).toLocaleString()}
 
-                    `;
+                        </p>
 
-                });
+                        <p>
+
+                            <strong>Status:</strong>
+
+                            🟢 ${data.activePlan.status}
+
+                        </p>
+
+                        <p>
+
+                            <strong>Started:</strong>
+
+                            ${new Date(data.activePlan.startDate).toLocaleDateString()}
+
+                        </p>
+
+                    </div>
+
+                `;
 
             }
 
