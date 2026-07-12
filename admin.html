@@ -5,38 +5,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TOP | Admin Panel</title>
+    <title>TOP | Admin Dashboard</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="login-box">
+    <!-- Header -->
+    <header class="top-header">
+        <div class="logo">TOP</div>
 
-        <h2>TOP Admin Panel</h2>
+        <div class="header-icons">
+            👨‍💼 Admin
+        </div>
+    </header>
 
-        <h3>Deposit Requests</h3>
+    <main class="dashboard">
 
-        <div id="depositList">
-            <p>Loading deposit requests...</p>
+        <div class="card">
+
+            <h2>Admin Dashboard</h2>
+
+            <p>
+                Manage deposit and withdrawal requests submitted by users.
+            </p>
+
         </div>
 
-        <hr>
+        <div class="card">
 
-        <h3>Withdrawal Requests</h3>
+            <h2>Deposit Requests</h2>
 
-        <div id="withdrawList">
-            <p>Loading withdrawal requests...</p>
+            <div id="depositList">
+                <p>Loading deposit requests...</p>
+            </div>
+
         </div>
 
-        <br>
+        <div class="card">
 
-        <a href="dashboard.html" class="btn">
-            Back to Dashboard
-        </a>
+            <h2>Withdrawal Requests</h2>
 
-    </div>
+            <div id="withdrawList">
+                <p>Loading withdrawal requests...</p>
+            </div>
+
+        </div>
+
+        <div style="text-align:center;margin:30px 0;">
+
+            <a href="dashboard.html" class="btn">
+                Back to Dashboard
+            </a>
+
+        </div>
+
+    </main>
 
     <script type="module" src="admin.js"></script>
 
