@@ -2,68 +2,224 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TOP | Admin Dashboard</title>
+<meta charset="UTF-8">
 
-    <link rel="stylesheet" href="style.css">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>TOP | Admin Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
 <body>
 
-    <!-- Header -->
-    <header class="top-header">
-        <div class="logo">TOP</div>
+<!-- HEADER -->
 
-        <div class="header-icons">
-            👨‍💼 Admin
-        </div>
-    </header>
+<header class="top-header">
 
-    <main class="dashboard">
+<div class="logo">
 
-        <div class="card">
+TOP ADMIN
 
-            <h2>Admin Dashboard</h2>
+</div>
 
-            <p>
-                Manage deposit and withdrawal requests submitted by users.
-            </p>
+<div class="header-icons">
 
-        </div>
+<i class="fa-solid fa-user-shield"></i>
 
-        <div class="card">
+</div>
 
-            <h2>Deposit Requests</h2>
+</header>
 
-            <div id="depositList">
-                <p>Loading deposit requests...</p>
-            </div>
 
-        </div>
 
-        <div class="card">
+<!-- DASHBOARD -->
 
-            <h2>Withdrawal Requests</h2>
+<main class="dashboard">
 
-            <div id="withdrawList">
-                <p>Loading withdrawal requests...</p>
-            </div>
 
-        </div>
 
-        <div style="text-align:center;margin:30px 0;">
+<!-- Statistics -->
 
-            <a href="dashboard.html" class="btn">
-                Back to Dashboard
-            </a>
+<div class="stats-grid">
 
-        </div>
+<div class="stat-card">
 
-    </main>
+<i class="fa-solid fa-users"></i>
 
-    <script type="module" src="admin.js"></script>
+<h3 id="totalUsers">0</h3>
+
+<p>Total Users</p>
+
+</div>
+
+
+
+<div class="stat-card">
+
+<i class="fa-solid fa-wallet"></i>
+
+<h3 id="totalDeposits">₦0</h3>
+
+<p>Total Deposits</p>
+
+</div>
+
+
+
+<div class="stat-card">
+
+<i class="fa-solid fa-money-bill-transfer"></i>
+
+<h3 id="totalWithdrawals">₦0</h3>
+
+<p>Total Withdrawals</p>
+
+</div>
+
+
+
+<div class="stat-card">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<h3 id="activePlans">0</h3>
+
+<p>Active Investments</p>
+
+</div>
+
+</div>
+
+
+
+<!-- Deposit Requests -->
+
+<div class="card">
+
+<h2>
+
+<i class="fa-solid fa-circle-down"></i>
+
+Deposit Requests
+
+</h2>
+
+<div id="depositList">
+
+<p>
+
+Loading deposits...
+
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- Withdrawal Requests -->
+
+<div class="card">
+
+<h2>
+
+<i class="fa-solid fa-circle-up"></i>
+
+Withdrawal Requests
+
+</h2>
+
+<div id="withdrawList">
+
+<p>
+
+Loading withdrawals...
+
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- Investments -->
+
+<div class="card">
+
+<h2>
+
+<i class="fa-solid fa-chart-column"></i>
+
+Active Investments
+
+</h2>
+
+<div id="investmentList">
+
+<p>
+
+Loading investments...
+
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- Users -->
+
+<div class="card">
+
+<h2>
+
+<i class="fa-solid fa-users"></i>
+
+Registered Users
+
+</h2>
+
+<div id="userList">
+
+<p>
+
+Loading users...
+
+</p>
+
+</div>
+
+</div>
+
+
+
+<div style="text-align:center;margin:40px 0;">
+
+<a
+href="dashboard.html"
+class="btn">
+
+Back to Dashboard
+
+</a>
+
+</div>
+
+
+
+</main>
+
+<script type="module" src="admin.js"></script>
 
 </body>
 
