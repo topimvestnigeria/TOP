@@ -17,95 +17,196 @@ import {
 
 let currentUser = null;
 
-// Check login
+
+// =============================
+// CHECK LOGIN
+// =============================
+
 onAuthStateChanged(auth, (user) => {
 
     if (!user) {
+
         window.location.href = "login.html";
+
         return;
+
     }
 
     currentUser = user;
 
 });
 
-// Investment buttons
-const investButtons = document.querySelectorAll(".investBtn");
 
-investButtons.forEach((button) => {
+// =============================
+// INVEST BUTTONS
+// =============================
 
-    button.addEventListener("click", async () => {
+document.querySelectorAll(".investBtn").forEach((button) => {
 
-        try {
+    button.addEventListener("click", () => invest(button));
 
-            if (!currentUser) {
-                alert("Please login first.");
-                return;
-            }
+});
 
-            const planName = button.dataset.name;
-            const amount = Number(button.dataset.amount);
-            const dailyProfit = Number(button.dataset.profit);
 
-            // User data
-            const userRef = doc(db, "users", currentUser.uid);
-            const userSnap = await getDoc(userRef);
+// =============================
+// INVEST FUNCTION
+// =============================
 
-            if (!userSnap.exists()) {
-                alert("User not found.");
-                return;
-            }
+async function invest(button) {
 
-            const user = userSnap.data();
+    button.disabled = true;
+    button.innerText = "Processing...";
 
-            // Wallet check
-            if (Number(user.balance) < amount) {
-                alert("Insufficient wallet balance.");
-                return;
-            }
+    try {
 
-            // Active investment check
-            const q = query(
-                collection(db, "investments"),
-                where("userId", "==", currentUser.uid),
-                where("status", "==", "Active")
-            );
+        if (!currentUser) {
 
-            const activePlans = await getDocs(q);
-
-            if (!activePlans.empty) {
-                alert("You already have an active investment. Upgrade feature is coming next.");
-                return;
-            }
-
-            // Deduct wallet
-            await updateDoc(userRef, {
-                balance: Number(user.balance) - amount
-            });
-
-            // Save investment
-            await addDoc(collection(db, "investments"), {
-                userId: currentUser.uid,
-                email: currentUser.email,
-                planName: planName,
-                investmentAmount: amount,
-                dailyProfit: dailyProfit,
-                status: "Active",
-                createdAt: new Date().toISOString(),
-                totalProfit: 0
-            });
-
-            alert("Investment activated successfully!");
-
-            window.location.href = "dashboard.html";
-
-        } catch (error) {
-
-            console.error(error);
-            alert(error.message);
+            throw new Error("Please login first.");
 
         }
 
-    });
+        const planName = button.dataset.name;
 
-});
+        const amount = Number(button.dataset.amount);
+
+        const dailyProfit = Number(button.dataset.profit);
+
+
+
+        // =============================
+        // USER DATA
+        // =============================
+
+        const userRef = doc(db, "users", currentUser.uid);
+
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+
+            throw new Error("User account not found.");
+
+        }
+
+        const user = userSnap.data();
+
+
+
+        // =============================
+        // WALLET CHECK
+        // =============================
+
+        if (Number(user.balance) < amount) {
+
+            throw new Error("Insufficient wallet balance.");
+
+        }
+
+
+
+        // =============================
+        // ACTIVE PLAN CHECK
+        // =============================
+
+        const activeQuery = query(
+
+            collection(db, "investments"),
+
+            where("userId", "==", currentUser.uid),
+
+            where("status", "==", "Active")
+
+        );
+
+        const activeSnapshot = await getDocs(activeQuery);
+
+        if (!activeSnapshot.empty) {
+
+            throw new Error("You already have an active investment. Upgrade will be available soon.");
+
+        }
+
+
+
+        // =============================
+        // DEDUCT WALLET
+        // =============================
+
+        await updateDoc(userRef, {
+
+            balance: Number(user.balance) - amount,
+
+            activePlan: {
+
+                planName: planName,
+
+                investmentAmount: amount,
+
+                dailyProfit: dailyProfit,
+
+                status: "Active",
+
+                startDate: new Date().toISOString(),
+
+                totalProfit: 0
+
+            }
+
+        });
+
+
+
+        // =============================
+        // SAVE HISTORY
+        // =============================
+
+        await addDoc(
+
+            collection(db, "investments"),
+
+            {
+
+                userId: currentUser.uid,
+
+                email: currentUser.email,
+
+                planName: planName,
+
+                investmentAmount: amount,
+
+                dailyProfit: dailyProfit,
+
+                status: "Active",
+
+                totalProfit: 0,
+
+                createdAt: new Date().toISOString()
+
+            }
+
+        );
+
+
+
+        alert("🎉 Investment activated successfully!");
+
+        window.location.href = "dashboard.html";
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
+
+    finally {
+
+        button.disabled = false;
+
+        button.innerText = "Invest Now";
+
+    }
+
+}
