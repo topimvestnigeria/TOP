@@ -2,33 +2,120 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>TOP | Transaction History</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
 <body>
 
-    <div class="login-box">
+<div class="login-box">
 
-        <h2>Transaction History</h2>
+    <div class="logo">
 
-        <div id="historyList">
-            <p>Loading transactions...</p>
-        </div>
-
-        <br>
-
-        <a href="dashboard.html" class="btn">
-            Back to Dashboard
-        </a>
+        TOP
 
     </div>
 
-    <script type="module" src="history.js"></script>
+    <h2>
+
+        Transaction History
+
+    </h2>
+
+    <p class="subtitle">
+
+        View all your deposits, withdrawals and investments.
+
+    </p>
+
+
+
+    <!-- Deposits -->
+
+    <h3>
+
+        <i class="fa-solid fa-arrow-down"></i>
+
+        Deposits
+
+    </h3>
+
+    <div id="depositHistory">
+
+        <p>Loading deposits...</p>
+
+    </div>
+
+
+
+    <hr>
+
+
+
+    <!-- Withdrawals -->
+
+    <h3>
+
+        <i class="fa-solid fa-arrow-up"></i>
+
+        Withdrawals
+
+    </h3>
+
+    <div id="withdrawHistory">
+
+        <p>Loading withdrawals...</p>
+
+    </div>
+
+
+
+    <hr>
+
+
+
+    <!-- Investments -->
+
+    <h3>
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        Investments
+
+    </h3>
+
+    <div id="investmentHistory">
+
+        <p>Loading investments...</p>
+
+    </div>
+
+
+
+    <br>
+
+    <a
+        href="dashboard.html"
+        class="btn">
+
+        ← Back to Dashboard
+
+    </a>
+
+</div>
+
+<script type="module" src="history.js"></script>
 
 </body>
 
