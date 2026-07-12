@@ -12,7 +12,7 @@ import {
     updateDoc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-const adminEmail = "aliyuashitu180@gmail.com";
+const adminEmail = "topinvestnigeria@gmail.com";
 
 onAuthStateChanged(auth, async (user) => {
 
