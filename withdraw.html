@@ -2,113 +2,165 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TOP | Withdraw</title>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>TOP | Withdraw Funds</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
 <body>
 
-
 <div class="login-box">
 
-    <h2>Withdraw Funds</h2>
+    <div class="logo">
+
+        TOP
+
+    </div>
+
+    <h2>
+
+        Withdraw Funds
+
+    </h2>
+
+    <p class="subtitle">
+
+        Withdraw your available wallet balance safely.
+
+    </p>
 
 
-    <!-- Saved Bank Account -->
+    <!-- SAVED BANK -->
 
-    <div id="savedBankBox" style="display:none;">
+    <div id="savedBankBox" class="payment-box" style="display:none;">
 
-        <h3>Saved Bank Account</h3>
+        <h3>
+
+            <i class="fa-solid fa-building-columns"></i>
+
+            Saved Bank Account
+
+        </h3>
 
         <p>
+
             <strong>Bank:</strong>
+
             <span id="savedBank"></span>
+
         </p>
 
         <p>
+
             <strong>Account Name:</strong>
+
             <span id="savedName"></span>
+
         </p>
 
         <p>
+
             <strong>Account Number:</strong>
+
             <span id="savedNumber"></span>
+
         </p>
 
+        <button
+            id="changeBankBtn"
+            class="btn">
 
-        <button id="changeBankBtn" class="btn">
             Change Bank Account
+
         </button>
 
     </div>
 
 
 
-    <!-- New Bank Form -->
+    <!-- BANK FORM -->
 
     <div id="bankForm">
 
-
         <label>
+
             Bank Name
+
         </label>
 
         <select id="bank">
 
-            <option value="">
-                Select Bank
-            </option>
+            <option value="">Select Bank</option>
 
-            <option>
-                Access Bank
-            </option>
+            <option>Access Bank</option>
 
-            <option>
-                GTBank
-            </option>
+            <option>Citibank</option>
 
-            <option>
-                First Bank
-            </option>
+            <option>Ecobank</option>
 
-            <option>
-                Zenith Bank
-            </option>
+            <option>Fidelity Bank</option>
 
-            <option>
-                UBA
-            </option>
+            <option>First Bank</option>
 
-            <option>
-                Opay
-            </option>
+            <option>FCMB</option>
 
-            <option>
-                PalmPay
-            </option>
+            <option>GTBank</option>
+
+            <option>Keystone Bank</option>
+
+            <option>Moniepoint</option>
+
+            <option>Opay</option>
+
+            <option>PalmPay</option>
+
+            <option>Polaris Bank</option>
+
+            <option>Providus Bank</option>
+
+            <option>Sterling Bank</option>
+
+            <option>UBA</option>
+
+            <option>Union Bank</option>
+
+            <option>Unity Bank</option>
+
+            <option>Wema Bank</option>
+
+            <option>Zenith Bank</option>
 
         </select>
 
 
-
         <label>
+
             Account Number
+
         </label>
 
         <input
             type="text"
             id="accountNumber"
-            placeholder="Enter account number"
-            inputmode="numeric">
-
+            maxlength="10"
+            inputmode="numeric"
+            placeholder="Enter 10-digit account number">
 
 
         <label>
+
             Account Name
+
         </label>
 
         <input
@@ -117,47 +169,57 @@
             placeholder="Enter account name">
 
 
+        <button
+            id="saveBankBtn"
+            class="btn">
 
-        <button id="saveBankBtn" class="btn">
             Save Bank Account
+
         </button>
 
-
     </div>
-
 
 
     <hr>
 
 
     <label>
-        Withdrawal Amount (₦)
-    </label>
 
+        Withdrawal Amount (₦)
+
+    </label>
 
     <input
         type="number"
         id="amount"
-        placeholder="Enter amount"
+        placeholder="Enter withdrawal amount"
         min="1">
 
 
+    <button
+        id="withdrawBtn"
+        class="btn">
 
-    <button id="withdrawBtn" class="btn">
-        Submit Withdrawal
+        Submit Withdrawal Request
+
     </button>
-
 
 
     <p id="status"></p>
 
+    <br>
+
+    <a
+        href="dashboard.html"
+        class="btn">
+
+        ← Back to Dashboard
+
+    </a>
 
 </div>
 
-
-
 <script type="module" src="withdraw.js"></script>
-
 
 </body>
 
