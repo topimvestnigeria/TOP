@@ -1,1 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TOP | Deposit</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h2>Deposit Funds</h2>
+
+        <div class="payment-box">
+
+            <h3>Bank Transfer</h3>
+
+            <p><strong>Bank:</strong> Opay</p>
+
+            <p><strong>Account Name:</strong> TOP Investment</p>
+
+            <p><strong>Account Number:</strong> 8123456789</p>
+
+            <hr>
+
+            <h3>USDT (TRC20)</h3>
+
+            <p id="walletAddress">
+                TQExampleWalletAddress123456789
+            </p>
+
+        </div>
+
+        <label for="amount">Amount (₦)</label>
+
+        <input
+            type="number"
+            id="amount"
+            placeholder="Enter amount"
+            min="1">
+
+        <label for="method">Payment Method</label>
+
+        <select id="method">
+
+            <option value="Bank Transfer">Bank Transfer</option>
+
+            <option value="USDT (TRC20)">USDT (TRC20)</option>
+
+        </select>
+
+        <label for="reference">Transaction Reference</label>
+
+        <input
+            type="text"
+            id="reference"
+            placeholder="Enter transaction reference">
+
+        <button id="depositBtn" class="btn">
+            Submit Deposit Request
+        </button>
+
+        <p id="status"></p>
+
+    </div>
+
+    <script type="module" src="deposit.js"></script>
+
+</body>
+
+</html>
