@@ -1,4 +1,3 @@
-alert("plans.js loaded");
 import { auth, db } from "./firebase.js";
 
 import {
@@ -9,8 +8,8 @@ import {
     doc,
     getDoc,
     updateDoc,
-    addDoc,
     collection,
+    addDoc,
     query,
     where,
     getDocs
@@ -18,6 +17,7 @@ import {
 
 let currentUser = null;
 
+// Check login
 onAuthStateChanged(auth, (user) => {
 
     if (!user) {
@@ -29,7 +29,10 @@ onAuthStateChanged(auth, (user) => {
 
 });
 
-document.querySelectorAll(".investBtn").forEach((button) => {
+// Investment buttons
+const investButtons = document.querySelectorAll(".investBtn");
+
+investButtons.forEach((button) => {
 
     button.addEventListener("click", async () => {
 
@@ -44,6 +47,7 @@ document.querySelectorAll(".investBtn").forEach((button) => {
             const amount = Number(button.dataset.amount);
             const dailyProfit = Number(button.dataset.profit);
 
+            // User data
             const userRef = doc(db, "users", currentUser.uid);
             const userSnap = await getDoc(userRef);
 
@@ -52,30 +56,34 @@ document.querySelectorAll(".investBtn").forEach((button) => {
                 return;
             }
 
-            const userData = userSnap.data();
+            const user = userSnap.data();
 
-            if (Number(userData.balance) < amount) {
+            // Wallet check
+            if (Number(user.balance) < amount) {
                 alert("Insufficient wallet balance.");
                 return;
             }
 
-            const investmentQuery = query(
+            // Active investment check
+            const q = query(
                 collection(db, "investments"),
                 where("userId", "==", currentUser.uid),
                 where("status", "==", "Active")
             );
 
-            const investmentSnapshot = await getDocs(investmentQuery);
+            const activePlans = await getDocs(q);
 
-            if (!investmentSnapshot.empty) {
-                alert("You already have an active investment.");
+            if (!activePlans.empty) {
+                alert("You already have an active investment. Upgrade feature is coming next.");
                 return;
             }
 
+            // Deduct wallet
             await updateDoc(userRef, {
-                balance: Number(userData.balance) - amount
+                balance: Number(user.balance) - amount
             });
 
+            // Save investment
             await addDoc(collection(db, "investments"), {
                 userId: currentUser.uid,
                 email: currentUser.email,
@@ -83,8 +91,8 @@ document.querySelectorAll(".investBtn").forEach((button) => {
                 investmentAmount: amount,
                 dailyProfit: dailyProfit,
                 status: "Active",
-                startDate: new Date().toISOString(),
-                lastProfitDate: null
+                createdAt: new Date().toISOString(),
+                totalProfit: 0
             });
 
             alert("Investment activated successfully!");
@@ -93,8 +101,8 @@ document.querySelectorAll(".investBtn").forEach((button) => {
 
         } catch (error) {
 
+            console.error(error);
             alert(error.message);
-            console.log(error);
 
         }
 
