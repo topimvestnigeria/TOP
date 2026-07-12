@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TOP | Withdraw</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h2>Withdraw Funds</h2>
+
+        <label for="amount">Amount (₦)</label>
+
+        <input
+            type="number"
+            id="amount"
+            placeholder="Enter amount"
+            min="1">
+
+        <label for="bank">Bank Name</label>
+
+        <input
+            type="text"
+            id="bank"
+            placeholder="Enter bank name">
+
+        <label for="accountNumber">Account Number</label>
+
+        <input
+            type="text"
+            id="accountNumber"
+            placeholder="Enter account number"
+            inputmode="numeric">
+
+        <label for="accountName">Account Name</label>
+
+        <input
+            type="text"
+            id="accountName"
+            placeholder="Enter account name">
+
+        <button id="withdrawBtn" class="btn">
+            Submit Withdrawal
+        </button>
+
+        <p id="status"></p>
+
+    </div>
+
+    <script type="module" src="withdraw.js"></script>
+
+</body>
+
+</html>
