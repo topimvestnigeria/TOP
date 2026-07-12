@@ -1,3 +1,7 @@
+/* =========================
+   GLOBAL RESET
+========================= */
+
 *{
     margin:0;
     padding:0;
@@ -8,158 +12,753 @@
 body{
     background:#f4f7fc;
     color:#222;
-    line-height:1.6;
+    min-height:100vh;
 }
 
-/* Header */
+a{
+    text-decoration:none;
+}
+
+
+/* =========================
+   HOME PAGE
+========================= */
 
 .header{
-    background:linear-gradient(135deg,#2d7cff,#69b8ff);
     height:80px;
+    background:linear-gradient(135deg,#2d7cff,#69b8ff);
     display:flex;
     justify-content:center;
     align-items:center;
     box-shadow:0 3px 12px rgba(0,0,0,.15);
 }
 
+
 .logo{
-    color:#fff;
-    font-size:40px;
+    color:white;
+    font-size:36px;
     font-weight:bold;
     letter-spacing:3px;
 }
 
-/* Hero */
 
 .hero{
     text-align:center;
     padding:70px 20px;
 }
 
+
 .hero h1{
     font-size:38px;
     margin-bottom:15px;
 }
 
+
 .hero p{
-    max-width:600px;
-    margin:0 auto 35px;
-    color:#666;
     font-size:18px;
+    color:#666;
+    margin-bottom:35px;
 }
 
-/* Buttons */
 
-.hero-buttons{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    flex-wrap:wrap;
+.features{
+    width:90%;
+    max-width:900px;
+    margin:auto;
+    padding-bottom:50px;
 }
+
+
+/* =========================
+   BUTTONS
+========================= */
 
 .btn{
     display:inline-block;
-    padding:15px 35px;
+    width:220px;
+    padding:14px;
+    margin:10px;
     background:#2d7cff;
-    color:#fff;
-    text-decoration:none;
+    color:white;
     border:none;
-    border-radius:10px;
-    cursor:pointer;
+    border-radius:12px;
     font-size:17px;
     font-weight:bold;
+    cursor:pointer;
+    text-align:center;
     transition:.3s;
 }
+
 
 .btn:hover{
     background:#1558d6;
 }
 
-/* Features */
 
-.features{
-    width:90%;
-    max-width:1100px;
-    margin:50px auto;
+.btn2{
+    background:white;
+    color:#2d7cff;
+    border:2px solid #2d7cff;
 }
+
+
+/* =========================
+   GENERAL CARDS
+========================= */
 
 .card{
-    background:#fff;
+    background:white;
     padding:25px;
-    border-radius:15px;
-    margin-bottom:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    margin:20px 0;
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
+
 
 .card h2{
     color:#2d7cff;
     margin-bottom:10px;
 }
 
+
 .card p{
     color:#555;
 }
 
-/* Forms */
+
+/* =========================
+   LOGIN / SIGNUP
+========================= */
 
 .login-box{
+
     width:90%;
-    max-width:420px;
-    margin:60px auto;
-    background:#fff;
+    max-width:400px;
+    margin:70px auto;
+
+    background:white;
     padding:30px;
-    border-radius:15px;
+
+    border-radius:18px;
+
     box-shadow:0 5px 20px rgba(0,0,0,.15);
+
+    text-align:center;
+
 }
 
+
 .login-box h2{
-    text-align:center;
     margin-bottom:25px;
 }
 
-.login-box input{
+
+.login-box input,
+.login-box select{
+
     width:100%;
-    padding:14px;
+    padding:15px;
+
     margin:10px 0;
+
     border:1px solid #ccc;
-    border-radius:8px;
+
+    border-radius:10px;
+
     font-size:16px;
+
 }
+
 
 .login-box button{
+
     width:100%;
+
+    padding:15px;
+
     margin-top:15px;
+
+    background:#2d7cff;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
 }
+
+
+.login-box button:hover{
+
+    background:#1558d6;
+
+}
+
 
 .login-box p{
-    text-align:center;
+
     margin-top:20px;
+
 }
 
-/* Footer */
 
-.footer{
+/* =========================
+   DASHBOARD
+========================= */
+
+
+.top-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:#0d6efd;
+
+    color:white;
+
+    padding:15px 20px;
+
+}
+
+
+.top-header .logo{
+
+    font-size:32px;
+
+}
+
+
+.header-icons{
+
+    display:flex;
+
+    gap:15px;
+
+    font-size:24px;
+
+}
+
+
+
+.balance-card{
+
+    background:linear-gradient(135deg,#0d6efd,#3b82f6);
+
+    color:white;
+
+    margin:20px;
+
+    padding:25px;
+
+    border-radius:20px;
+
     text-align:center;
-    padding:20px;
-    background:#fff;
-    color:#666;
-    margin-top:40px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+
 }
 
-/* Mobile */
 
-@media(max-width:768px){
 
-.hero h1{
-    font-size:30px;
-}
+.balance-card p{
 
-.hero p{
     font-size:16px;
+
+    opacity:.9;
+
 }
 
-.logo{
-    font-size:34px;
+
+
+.balance-card h1{
+
+    font-size:42px;
+
+    margin:15px 0;
+
 }
+
+
+
+.balance-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+    justify-content:center;
+
+}
+
+
+
+.deposit-btn,
+.withdraw-btn{
+
+    flex:1;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:15px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+
+.deposit-btn{
+
+    background:#28a745;
+
+    color:white;
+
+}
+
+
+
+.withdraw-btn{
+
+    background:#dc3545;
+
+    color:white;
+
+}
+
+
+
+.deposit-btn:hover,
+.withdraw-btn:hover{
+
+    transform:scale(1.05);
+
+}
+
+
+
+
+/* =========================
+   DASHBOARD MENU
+========================= */
+
+
+.menu-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:15px;
+
+    padding:20px;
+
+}
+
+
+
+.menu-item{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    color:#222;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+
+    transition:.3s;
+
+}
+
+
+
+.menu-item:hover{
+
+    transform:translateY(-5px);
+
+}
+
+
+
+.menu-item i{
+
+    display:block;
+
+    font-size:35px;
+
+    margin-bottom:10px;
+
+    color:#2d7cff;
+
+}
+
+
+
+.menu-item p{
+
+    font-size:17px;
+
+    font-weight:bold;
+
+}
+
+
+
+/* =========================
+   INVESTMENT PLANS
+========================= */
+
+
+.plan-card{
+
+    background:white;
+
+    margin:20px;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    box-shadow:0 6px 15px rgba(0,0,0,.08);
+
+}
+
+
+
+.plan-card h3{
+
+    color:#0d6efd;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.plan-card p{
+
+    margin:8px 0;
+
+}
+
+
+
+
+/* =========================
+   REFERRAL
+========================= */
+
+
+.referral-card{
+
+    background:linear-gradient(135deg,#2d7cff,#69b8ff);
+
+    color:white;
+
+    margin:20px;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+
+
+.referral-card h2{
+
+    margin-bottom:10px;
+
+}
+
+
+
+.referral-card p{
+
+    line-height:1.6;
+
+    margin-bottom:20px;
+
+}
+
+
+
+/* =========================
+   DEPOSIT & WITHDRAW
+========================= */
+
+
+.payment-box{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    margin-bottom:20px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+
+.payment-box h3{
+
+    color:#2d7cff;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.login-box label{
+
+    display:block;
+
+    text-align:left;
+
+    margin-top:10px;
+
+    font-weight:bold;
+
+}
+
+
+
+/* =========================
+   HISTORY
+========================= */
+
+
+#historyList{
+
+    text-align:left;
+
+}
+
+
+.transaction-card{
+
+    background:white;
+
+    padding:20px;
+
+    margin:15px 0;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+
+.transaction-card h3{
+
+    color:#2d7cff;
+
+    margin-bottom:10px;
+
+}
+
+
+
+
+/* =========================
+   PROFILE
+========================= */
+
+
+.profile-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+
+}
+
+
+
+/* =========================
+   ADMIN PANEL
+========================= */
+
+
+#depositList,
+#withdrawList{
+
+    text-align:left;
+
+}
+
+
+#depositList div,
+#withdrawList div{
+
+    background:white;
+
+    padding:20px;
+
+    margin:15px 0;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+
+
+.approveBtn,
+.withdrawApproveBtn{
+
+    background:#28a745;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+
+
+/* =========================
+   BOTTOM NAVIGATION
+========================= */
+
+
+.bottom-nav{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    background:white;
+
+    padding:15px;
+
+    box-shadow:0 -3px 10px rgba(0,0,0,.1);
+
+}
+
+
+
+.nav-item{
+
+    text-align:center;
+
+    color:#666;
+
+}
+
+
+
+.nav-item i{
+
+    font-size:20px;
+
+}
+
+
+
+.nav-item.active{
+
+    color:#2d7cff;
+
+    font-weight:bold;
+
+}
+
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+
+@media(max-width:600px){
+
+
+    .menu-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+
+    .hero h1{
+
+        font-size:30px;
+
+    }
+
+
+    .balance-card h1{
+
+        font-size:34px;
+
+    }
+
+
+    .balance-buttons{
+
+        flex-direction:column;
+
+    }
+
+
+    .btn{
+
+        width:100%;
+
+    }
+
+
+    .logo{
+
+        font-size:30px;
+
+    }
 
 }
