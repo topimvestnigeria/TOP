@@ -5,54 +5,128 @@ import {
     collection
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+
 const depositBtn = document.getElementById("depositBtn");
 
-depositBtn.addEventListener("click", async () => {
+depositBtn.addEventListener("click", submitDeposit);
+
+
+// ===================================
+// SUBMIT DEPOSIT
+// ===================================
+
+async function submitDeposit() {
+
+    depositBtn.disabled = true;
+
+    depositBtn.innerText = "Submitting...";
 
     try {
 
         const user = auth.currentUser;
 
         if (!user) {
-            alert("Please login first.");
-            return;
+
+            throw new Error("Please login first.");
+
         }
 
-        const amount = Number(document.getElementById("amount").value);
-        const method = document.getElementById("method").value;
-        const reference = document.getElementById("reference").value.trim();
 
-        if (amount <= 0) {
-            alert("Please enter a valid amount.");
-            return;
+        const amount = Number(
+
+            document.getElementById("amount").value
+
+        );
+
+        const method =
+
+            document.getElementById("method").value;
+
+        const reference =
+
+            document.getElementById("reference").value.trim();
+
+
+
+        // ===========================
+        // VALIDATION
+        // ===========================
+
+        if (isNaN(amount) || amount <= 0) {
+
+            throw new Error("Please enter a valid deposit amount.");
+
         }
+
 
         if (!reference) {
-            alert("Please enter the transaction reference.");
-            return;
+
+            throw new Error("Please enter your transaction reference.");
+
         }
 
-        await addDoc(collection(db, "depositRequests"), {
-            userId: user.uid,
-            email: user.email,
-            amount: amount,
-            method: method,
-            reference: reference,
-            status: "Pending",
-            createdAt: new Date().toISOString()
-        });
 
-        document.getElementById("status").innerText =
-            "✅ Deposit request submitted successfully.";
+
+        // ===========================
+        // SAVE REQUEST
+        // ===========================
+
+        await addDoc(
+
+            collection(db, "depositRequests"),
+
+            {
+
+                userId: user.uid,
+
+                email: user.email,
+
+                amount: amount,
+
+                method: method,
+
+                reference: reference,
+
+                status: "Pending",
+
+                createdAt: new Date().toISOString()
+
+            }
+
+        );
+
+
+
+        document.getElementById("status").innerHTML =
+
+            "✅ Your deposit request has been submitted successfully.<br><br>Please wait for admin approval before the amount appears in your wallet.";
+
+
+
+        // ===========================
+        // CLEAR FORM
+        // ===========================
 
         document.getElementById("amount").value = "";
+
         document.getElementById("reference").value = "";
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         console.error(error);
+
         alert(error.message);
 
     }
 
-});
+    finally {
+
+        depositBtn.disabled = false;
+
+        depositBtn.innerText = "Submit Deposit Request";
+
+    }
+
+}
