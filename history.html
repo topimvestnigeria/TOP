@@ -1,122 +1,450 @@
-<!DOCTYPE html>
-<html lang="en">
+import { auth, db } from "./firebase.js";
 
-<head>
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-    <meta charset="UTF-8">
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    orderBy
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
 
-    <title>TOP | Transaction History</title>
 
-    <link rel="stylesheet" href="style.css">
+const depositHistory =
+    document.getElementById("depositHistory");
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+const withdrawHistory =
+    document.getElementById("withdrawHistory");
 
-</head>
+const investmentHistory =
+    document.getElementById("investmentHistory");
 
-<body>
 
-<div class="login-box">
 
-    <div class="logo">
 
-        TOP
+// ==============================
+// CHECK LOGIN
+// ==============================
 
-    </div>
+onAuthStateChanged(auth, async (user)=>{
 
-    <h2>
 
-        Transaction History
+    if(!user){
 
-    </h2>
+        window.location.href = "login.html";
 
-    <p class="subtitle">
+        return;
 
-        View all your deposits, withdrawals and investments.
+    }
 
-    </p>
 
+    try{
 
 
-    <!-- Deposits -->
+        await loadDeposits(user.uid);
 
-    <h3>
+        await loadWithdrawals(user.uid);
 
-        <i class="fa-solid fa-arrow-down"></i>
+        await loadInvestments(user.uid);
 
-        Deposits
 
-    </h3>
+    }
 
-    <div id="depositHistory">
 
-        <p>Loading deposits...</p>
+    catch(error){
 
-    </div>
+        console.error(error);
 
+        alert(error.message);
 
+    }
 
-    <hr>
 
+});
 
 
-    <!-- Withdrawals -->
 
-    <h3>
 
-        <i class="fa-solid fa-arrow-up"></i>
 
-        Withdrawals
 
-    </h3>
 
-    <div id="withdrawHistory">
+// ==============================
+// LOAD DEPOSITS
+// ==============================
 
-        <p>Loading withdrawals...</p>
+async function loadDeposits(uid){
 
-    </div>
 
+    const q = query(
 
+        collection(db,"depositRequests"),
 
-    <hr>
+        where("userId","==",uid)
 
+    );
 
 
-    <!-- Investments -->
 
-    <h3>
+    const snapshot =
+    await getDocs(q);
 
-        <i class="fa-solid fa-chart-line"></i>
 
-        Investments
 
-    </h3>
+    if(snapshot.empty){
 
-    <div id="investmentHistory">
+        depositHistory.innerHTML =
+        "<p>No deposit history found.</p>";
 
-        <p>Loading investments...</p>
+        return;
 
-    </div>
+    }
 
 
 
-    <br>
+    depositHistory.innerHTML = "";
 
-    <a
-        href="dashboard.html"
-        class="btn">
 
-        ← Back to Dashboard
 
-    </a>
+    snapshot.forEach((doc)=>{
 
-</div>
 
-<script type="module" src="history.js"></script>
+        const data = doc.data();
 
-</body>
 
-</html>
+
+        depositHistory.innerHTML += `
+
+
+        <div class="transaction-card">
+
+
+            <h3>
+            Deposit
+            </h3>
+
+
+            <p>
+            <strong>Amount:</strong>
+            ₦${Number(data.amount).toLocaleString()}
+            </p>
+
+
+            <p>
+            <strong>Method:</strong>
+            ${data.method}
+            </p>
+
+
+            <p>
+            <strong>Reference:</strong>
+            ${data.reference}
+            </p>
+
+
+            <p>
+            <strong>Status:</strong>
+            ${statusBadge(data.status)}
+            </p>
+
+
+            <p>
+            <strong>Date:</strong>
+            ${formatDate(data.createdAt)}
+            </p>
+
+
+        </div>
+
+
+        `;
+
+
+    });
+
+
+}
+
+
+
+
+
+
+
+
+// ==============================
+// LOAD WITHDRAWALS
+// ==============================
+
+async function loadWithdrawals(uid){
+
+
+    const q = query(
+
+        collection(db,"withdrawRequests"),
+
+        where("userId","==",uid)
+
+    );
+
+
+
+    const snapshot =
+    await getDocs(q);
+
+
+
+    if(snapshot.empty){
+
+        withdrawHistory.innerHTML =
+        "<p>No withdrawal history found.</p>";
+
+        return;
+
+    }
+
+
+
+    withdrawHistory.innerHTML = "";
+
+
+
+    snapshot.forEach((doc)=>{
+
+
+        const data = doc.data();
+
+
+
+        withdrawHistory.innerHTML += `
+
+
+        <div class="transaction-card">
+
+
+            <h3>
+            Withdrawal
+            </h3>
+
+
+            <p>
+            <strong>Amount:</strong>
+            ₦${Number(data.amount).toLocaleString()}
+            </p>
+
+
+            <p>
+            <strong>Bank:</strong>
+            ${data.bank}
+            </p>
+
+
+            <p>
+            <strong>Account:</strong>
+            ${data.accountNumber}
+            </p>
+
+
+            <p>
+            <strong>Status:</strong>
+            ${statusBadge(data.status)}
+            </p>
+
+
+            <p>
+            <strong>Date:</strong>
+            ${formatDate(data.createdAt)}
+            </p>
+
+
+        </div>
+
+
+        `;
+
+
+    });
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==============================
+// LOAD INVESTMENTS
+// ==============================
+
+async function loadInvestments(uid){
+
+
+    const q = query(
+
+        collection(db,"investments"),
+
+        where("userId","==",uid)
+
+    );
+
+
+
+    const snapshot =
+    await getDocs(q);
+
+
+
+    if(snapshot.empty){
+
+        investmentHistory.innerHTML =
+        "<p>No investment history found.</p>";
+
+        return;
+
+    }
+
+
+
+    investmentHistory.innerHTML = "";
+
+
+
+    snapshot.forEach((doc)=>{
+
+
+        const data = doc.data();
+
+
+
+        investmentHistory.innerHTML += `
+
+
+        <div class="transaction-card">
+
+
+            <h3>
+            ${data.planName}
+            </h3>
+
+
+            <p>
+            <strong>Investment:</strong>
+            ₦${Number(data.investmentAmount).toLocaleString()}
+            </p>
+
+
+            <p>
+            <strong>Daily Profit:</strong>
+            ₦${Number(data.dailyProfit).toLocaleString()}
+            </p>
+
+
+            <p>
+            <strong>Total Profit:</strong>
+            ₦${Number(data.totalProfit || 0).toLocaleString()}
+            </p>
+
+
+            <p>
+            <strong>Status:</strong>
+            ${statusBadge(data.status)}
+            </p>
+
+
+            <p>
+            <strong>Date:</strong>
+            ${formatDate(data.createdAt)}
+            </p>
+
+
+        </div>
+
+
+        `;
+
+
+    });
+
+
+}
+
+
+
+
+
+
+
+
+// ==============================
+// STATUS
+// ==============================
+
+function statusBadge(status){
+
+
+    if(status === "Approved" || status === "Active"){
+
+        return `
+        <span style="color:green;font-weight:bold;">
+        🟢 ${status}
+        </span>
+        `;
+
+    }
+
+
+
+    if(status === "Rejected"){
+
+        return `
+        <span style="color:red;font-weight:bold;">
+        🔴 Rejected
+        </span>
+        `;
+
+    }
+
+
+
+    return `
+    <span style="color:orange;font-weight:bold;">
+    🟡 Pending
+    </span>
+    `;
+
+
+}
+
+
+
+
+
+
+
+
+// ==============================
+// DATE
+// ==============================
+
+function formatDate(date){
+
+
+    if(!date){
+
+        return "-";
+
+    }
+
+
+
+    return new Date(date).toLocaleString();
+
+
+}
