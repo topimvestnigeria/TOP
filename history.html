@@ -1,450 +1,55 @@
-import { auth, db } from "./firebase.js";
+<!DOCTYPE html>
+<html lang="en">
 
-import {
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOP | Transaction History</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
 
-import {
-    collection,
-    query,
-    where,
-    getDocs,
-    orderBy
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+<body>
 
+<div class="login-box">
 
+    <div class="logo">TOP</div>
 
-const depositHistory =
-    document.getElementById("depositHistory");
+    <h2>Transaction History</h2>
 
-const withdrawHistory =
-    document.getElementById("withdrawHistory");
+    <p class="subtitle">
+        View all your deposits, withdrawals and investments.
+    </p>
 
-const investmentHistory =
-    document.getElementById("investmentHistory");
+    <h3><i class="fa-solid fa-arrow-down"></i> Deposits</h3>
+    <div id="depositHistory">
+        <p>Loading deposits...</p>
+    </div>
 
+    <hr>
 
+    <h3><i class="fa-solid fa-arrow-up"></i> Withdrawals</h3>
+    <div id="withdrawHistory">
+        <p>Loading withdrawals...</p>
+    </div>
 
+    <hr>
 
-// ==============================
-// CHECK LOGIN
-// ==============================
+    <h3><i class="fa-solid fa-chart-line"></i> Investments</h3>
+    <div id="investmentHistory">
+        <p>Loading investments...</p>
+    </div>
 
-onAuthStateChanged(auth, async (user)=>{
+    <br>
 
+    <a href="dashboard.html" class="btn">
+        ← Back to Dashboard
+    </a>
 
-    if(!user){
+</div>
 
-        window.location.href = "login.html";
+<script type="module" src="history.js"></script>
 
-        return;
-
-    }
-
-
-    try{
-
-
-        await loadDeposits(user.uid);
-
-        await loadWithdrawals(user.uid);
-
-        await loadInvestments(user.uid);
-
-
-    }
-
-
-    catch(error){
-
-        console.error(error);
-
-        alert(error.message);
-
-    }
-
-
-});
-
-
-
-
-
-
-
-// ==============================
-// LOAD DEPOSITS
-// ==============================
-
-async function loadDeposits(uid){
-
-
-    const q = query(
-
-        collection(db,"depositRequests"),
-
-        where("userId","==",uid)
-
-    );
-
-
-
-    const snapshot =
-    await getDocs(q);
-
-
-
-    if(snapshot.empty){
-
-        depositHistory.innerHTML =
-        "<p>No deposit history found.</p>";
-
-        return;
-
-    }
-
-
-
-    depositHistory.innerHTML = "";
-
-
-
-    snapshot.forEach((doc)=>{
-
-
-        const data = doc.data();
-
-
-
-        depositHistory.innerHTML += `
-
-
-        <div class="transaction-card">
-
-
-            <h3>
-            Deposit
-            </h3>
-
-
-            <p>
-            <strong>Amount:</strong>
-            ₦${Number(data.amount).toLocaleString()}
-            </p>
-
-
-            <p>
-            <strong>Method:</strong>
-            ${data.method}
-            </p>
-
-
-            <p>
-            <strong>Reference:</strong>
-            ${data.reference}
-            </p>
-
-
-            <p>
-            <strong>Status:</strong>
-            ${statusBadge(data.status)}
-            </p>
-
-
-            <p>
-            <strong>Date:</strong>
-            ${formatDate(data.createdAt)}
-            </p>
-
-
-        </div>
-
-
-        `;
-
-
-    });
-
-
-}
-
-
-
-
-
-
-
-
-// ==============================
-// LOAD WITHDRAWALS
-// ==============================
-
-async function loadWithdrawals(uid){
-
-
-    const q = query(
-
-        collection(db,"withdrawRequests"),
-
-        where("userId","==",uid)
-
-    );
-
-
-
-    const snapshot =
-    await getDocs(q);
-
-
-
-    if(snapshot.empty){
-
-        withdrawHistory.innerHTML =
-        "<p>No withdrawal history found.</p>";
-
-        return;
-
-    }
-
-
-
-    withdrawHistory.innerHTML = "";
-
-
-
-    snapshot.forEach((doc)=>{
-
-
-        const data = doc.data();
-
-
-
-        withdrawHistory.innerHTML += `
-
-
-        <div class="transaction-card">
-
-
-            <h3>
-            Withdrawal
-            </h3>
-
-
-            <p>
-            <strong>Amount:</strong>
-            ₦${Number(data.amount).toLocaleString()}
-            </p>
-
-
-            <p>
-            <strong>Bank:</strong>
-            ${data.bank}
-            </p>
-
-
-            <p>
-            <strong>Account:</strong>
-            ${data.accountNumber}
-            </p>
-
-
-            <p>
-            <strong>Status:</strong>
-            ${statusBadge(data.status)}
-            </p>
-
-
-            <p>
-            <strong>Date:</strong>
-            ${formatDate(data.createdAt)}
-            </p>
-
-
-        </div>
-
-
-        `;
-
-
-    });
-
-
-}
-
-
-
-
-
-
-
-
-
-// ==============================
-// LOAD INVESTMENTS
-// ==============================
-
-async function loadInvestments(uid){
-
-
-    const q = query(
-
-        collection(db,"investments"),
-
-        where("userId","==",uid)
-
-    );
-
-
-
-    const snapshot =
-    await getDocs(q);
-
-
-
-    if(snapshot.empty){
-
-        investmentHistory.innerHTML =
-        "<p>No investment history found.</p>";
-
-        return;
-
-    }
-
-
-
-    investmentHistory.innerHTML = "";
-
-
-
-    snapshot.forEach((doc)=>{
-
-
-        const data = doc.data();
-
-
-
-        investmentHistory.innerHTML += `
-
-
-        <div class="transaction-card">
-
-
-            <h3>
-            ${data.planName}
-            </h3>
-
-
-            <p>
-            <strong>Investment:</strong>
-            ₦${Number(data.investmentAmount).toLocaleString()}
-            </p>
-
-
-            <p>
-            <strong>Daily Profit:</strong>
-            ₦${Number(data.dailyProfit).toLocaleString()}
-            </p>
-
-
-            <p>
-            <strong>Total Profit:</strong>
-            ₦${Number(data.totalProfit || 0).toLocaleString()}
-            </p>
-
-
-            <p>
-            <strong>Status:</strong>
-            ${statusBadge(data.status)}
-            </p>
-
-
-            <p>
-            <strong>Date:</strong>
-            ${formatDate(data.createdAt)}
-            </p>
-
-
-        </div>
-
-
-        `;
-
-
-    });
-
-
-}
-
-
-
-
-
-
-
-
-// ==============================
-// STATUS
-// ==============================
-
-function statusBadge(status){
-
-
-    if(status === "Approved" || status === "Active"){
-
-        return `
-        <span style="color:green;font-weight:bold;">
-        🟢 ${status}
-        </span>
-        `;
-
-    }
-
-
-
-    if(status === "Rejected"){
-
-        return `
-        <span style="color:red;font-weight:bold;">
-        🔴 Rejected
-        </span>
-        `;
-
-    }
-
-
-
-    return `
-    <span style="color:orange;font-weight:bold;">
-    🟡 Pending
-    </span>
-    `;
-
-
-}
-
-
-
-
-
-
-
-
-// ==============================
-// DATE
-// ==============================
-
-function formatDate(date){
-
-
-    if(!date){
-
-        return "-";
-
-    }
-
-
-
-    return new Date(date).toLocaleString();
-
-
-}
+</body>
+</html>
