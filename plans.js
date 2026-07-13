@@ -12,11 +12,13 @@ import {
     addDoc,
     query,
     where,
-    getDocs
+    getDocs,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
 let currentUser = null;
+
 
 
 // =============================
@@ -25,17 +27,23 @@ let currentUser = null;
 
 onAuthStateChanged(auth, (user)=>{
 
+
     if(!user){
 
-        window.location.href = "login.html";
+        window.location.href =
+        "login.html";
 
         return;
 
     }
 
+
     currentUser = user;
 
+
 });
+
+
 
 
 
@@ -43,16 +51,21 @@ onAuthStateChanged(auth, (user)=>{
 // INVEST BUTTONS
 // =============================
 
+
 document.querySelectorAll(".investBtn")
 .forEach((button)=>{
 
-    button.addEventListener("click",()=>{
 
-        invest(button);
+    button.addEventListener(
+        "click",
+        ()=>invest(button)
+    );
 
-    });
 
 });
+
+
+
 
 
 
@@ -61,12 +74,15 @@ document.querySelectorAll(".investBtn")
 // INVEST FUNCTION
 // =============================
 
+
 async function invest(button){
 
 
     button.disabled = true;
 
-    button.innerText = "Processing...";
+    button.innerText =
+    "Processing...";
+
 
 
     try{
@@ -74,27 +90,43 @@ async function invest(button){
 
         if(!currentUser){
 
-            throw new Error("Please login first.");
+            throw new Error(
+                "Please login first."
+            );
 
         }
 
 
 
-        const planName = button.dataset.name;
 
-        const amount = Number(button.dataset.amount);
-
-        const dailyProfit = Number(button.dataset.profit);
+        const planName =
+        button.dataset.name;
 
 
 
+        const amount =
+        Number(button.dataset.amount);
 
-        // =============================
-        // GET USER DATA
-        // =============================
+
+
+        const dailyProfit =
+        Number(button.dataset.profit);
+
+
+
+
+
+
+        // USER DATA
+
 
         const userRef =
-        doc(db,"users",currentUser.uid);
+        doc(
+            db,
+            "users",
+            currentUser.uid
+        );
+
 
 
         const userSnap =
@@ -104,7 +136,9 @@ async function invest(button){
 
         if(!userSnap.exists()){
 
-            throw new Error("User account not found.");
+            throw new Error(
+                "User account not found."
+            );
 
         }
 
@@ -116,12 +150,17 @@ async function invest(button){
 
 
 
-        // =============================
-        // CHECK WALLET
-        // =============================
 
 
-        if(Number(user.balance) < amount){
+
+        // CHECK BALANCE
+
+
+        if(
+            Number(user.balance || 0)
+            <
+            amount
+        ){
 
             throw new Error(
                 "Insufficient wallet balance."
@@ -133,12 +172,13 @@ async function invest(button){
 
 
 
-        // =============================
-        // CHECK ACTIVE INVESTMENT
-        // =============================
 
 
-        const activeQuery = query(
+        // CHECK ACTIVE PLAN
+
+
+        const activeQuery =
+        query(
 
             collection(db,"investments"),
 
@@ -158,12 +198,12 @@ async function invest(button){
 
 
 
-        const activeSnapshot =
+        const activeSnap =
         await getDocs(activeQuery);
 
 
 
-        if(!activeSnapshot.empty){
+        if(!activeSnap.empty){
 
             throw new Error(
                 "You already have an active investment."
@@ -174,31 +214,42 @@ async function invest(button){
 
 
 
-        // =============================
+
+
+
         // CREATE INVESTMENT
-        // =============================
 
 
         await addDoc(
             collection(db,"investments"),
             {
 
-                userId: currentUser.uid,
+                userId:
+                currentUser.uid,
 
-                email: currentUser.email,
+                email:
+                currentUser.email,
 
-                planName: planName,
 
-                investmentAmount: amount,
+                planName,
 
-                dailyProfit: dailyProfit,
+
+                investmentAmount:
+                amount,
+
+
+                dailyProfit,
+
 
                 totalProfit:0,
 
-                status:"Active",
+
+                status:
+                "Active",
+
 
                 createdAt:
-                new Date().toISOString()
+                serverTimestamp()
 
             }
         );
@@ -207,9 +258,9 @@ async function invest(button){
 
 
 
-        // =============================
-        // DEDUCT USER BALANCE
-        // =============================
+
+
+        // UPDATE USER WALLET
 
 
         await updateDoc(
@@ -217,21 +268,32 @@ async function invest(button){
             {
 
                 balance:
-                Number(user.balance) - amount,
+                Number(user.balance || 0)
+                -
+                amount,
 
 
                 activePlan:{
 
-                    planName:planName,
+                    planName,
 
-                    investmentAmount:amount,
+                    investmentAmount:
+                    amount,
 
-                    dailyProfit:dailyProfit,
 
-                    status:"Active",
+                    dailyProfit,
+
+
+                    totalProfit:0,
+
+
+                    status:
+                    "Active",
+
 
                     startDate:
-                    new Date().toISOString()
+                    new Date()
+                    .toISOString()
 
                 }
 
@@ -245,8 +307,7 @@ async function invest(button){
 
 
         // =============================
-        // REFERRAL REWARD 20%
-        // FIRST INVESTMENT ONLY
+        // 20% REFERRAL BONUS
         // =============================
 
 
@@ -254,6 +315,7 @@ async function invest(button){
             user.referredBy &&
             user.referralRewardPaid !== true
         ){
+
 
 
             const referralQuery =
@@ -271,17 +333,18 @@ async function invest(button){
 
 
 
-            const referralSnapshot =
+            const referralSnap =
             await getDocs(referralQuery);
 
 
 
-            if(!referralSnapshot.empty){
+            if(!referralSnap.empty){
 
 
 
                 const referrerDoc =
-                referralSnapshot.docs[0];
+                referralSnap.docs[0];
+
 
 
                 const referrer =
@@ -294,38 +357,55 @@ async function invest(button){
 
 
 
-                const referrerRef =
-                doc(
-                    db,
-                    "users",
-                    referrerDoc.id
-                );
-
-
-
-
                 await updateDoc(
-                    referrerRef,
+
+                    doc(
+                        db,
+                        "users",
+                        referrerDoc.id
+                    ),
+
                     {
 
                         balance:
-                        Number(referrer.balance || 0)
-                        + reward,
+                        Number(
+                            referrer.balance || 0
+                        )
+                        +
+                        reward,
 
 
                         referralBonus:
-                        Number(referrer.referralBonus || 0)
-                        + reward
+                        Number(
+                            referrer.referralBonus || 0
+                        )
+                        +
+                        reward,
+
+
+                        totalProfit:
+                        Number(
+                            referrer.totalProfit || 0
+                        )
+                        +
+                        reward
 
                     }
+
                 );
+
 
 
 
 
 
                 await addDoc(
-                    collection(db,"referralRewards"),
+
+                    collection(
+                        db,
+                        "referralRewards"
+                    ),
+
                     {
 
                         referrerId:
@@ -336,19 +416,20 @@ async function invest(button){
                         currentUser.uid,
 
 
-                        investmentAmount:
+                        amountInvested:
                         amount,
 
 
-                        reward:
                         reward,
 
 
                         createdAt:
-                        new Date().toISOString()
+                        serverTimestamp()
 
                     }
+
                 );
+
 
 
 
@@ -364,10 +445,16 @@ async function invest(button){
                 );
 
 
+
             }
 
 
+
         }
+
+
+
+
 
 
 
@@ -377,8 +464,10 @@ async function invest(button){
         );
 
 
+
         window.location.href =
         "dashboard.html";
+
 
 
 
@@ -390,7 +479,9 @@ async function invest(button){
 
         console.error(error);
 
-        alert(error.message);
+        alert(
+            error.message
+        );
 
 
     }
