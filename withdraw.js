@@ -197,7 +197,12 @@ withdrawBtn.addEventListener("click", async () => {
 
 
         if (isNaN(amount) || amount <= 0) {
+            
+        if(amount < 1000){
 
+            throw new Error("Minimum withdrawal is ₦1,000.");
+
+}
             throw new Error("Please enter a valid withdrawal amount.");
 
         }
