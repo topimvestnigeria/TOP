@@ -15,6 +15,7 @@ import {
     getDocs
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+
 let currentUser = null;
 
 
@@ -22,9 +23,9 @@ let currentUser = null;
 // CHECK LOGIN
 // =============================
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, (user)=>{
 
-    if (!user) {
+    if(!user){
 
         window.location.href = "login.html";
 
@@ -37,33 +38,47 @@ onAuthStateChanged(auth, (user) => {
 });
 
 
+
 // =============================
 // INVEST BUTTONS
 // =============================
 
-document.querySelectorAll(".investBtn").forEach((button) => {
+document.querySelectorAll(".investBtn")
+.forEach((button)=>{
 
-    button.addEventListener("click", () => invest(button));
+    button.addEventListener("click",()=>{
+
+        invest(button);
+
+    });
 
 });
+
+
 
 
 // =============================
 // INVEST FUNCTION
 // =============================
 
-async function invest(button) {
+async function invest(button){
+
 
     button.disabled = true;
+
     button.innerText = "Processing...";
 
-    try {
 
-        if (!currentUser) {
+    try{
+
+
+        if(!currentUser){
 
             throw new Error("Please login first.");
 
         }
+
+
 
         const planName = button.dataset.name;
 
@@ -73,96 +88,99 @@ async function invest(button) {
 
 
 
+
         // =============================
-        // USER DATA
+        // GET USER DATA
         // =============================
 
-        const userRef = doc(db, "users", currentUser.uid);
+        const userRef =
+        doc(db,"users",currentUser.uid);
 
-        const userSnap = await getDoc(userRef);
 
-        if (!userSnap.exists()) {
+        const userSnap =
+        await getDoc(userRef);
+
+
+
+        if(!userSnap.exists()){
 
             throw new Error("User account not found.");
 
         }
 
-        const user = userSnap.data();
+
+
+        const user =
+        userSnap.data();
+
 
 
 
         // =============================
-        // WALLET CHECK
+        // CHECK WALLET
         // =============================
 
-        if (Number(user.balance) < amount) {
 
-            throw new Error("Insufficient wallet balance.");
+        if(Number(user.balance) < amount){
+
+            throw new Error(
+                "Insufficient wallet balance."
+            );
 
         }
 
 
 
+
+
         // =============================
-        // ACTIVE PLAN CHECK
+        // CHECK ACTIVE INVESTMENT
         // =============================
+
 
         const activeQuery = query(
 
-            collection(db, "investments"),
+            collection(db,"investments"),
 
-            where("userId", "==", currentUser.uid),
+            where(
+                "userId",
+                "==",
+                currentUser.uid
+            ),
 
-            where("status", "==", "Active")
+            where(
+                "status",
+                "==",
+                "Active"
+            )
 
         );
 
-        const activeSnapshot = await getDocs(activeQuery);
 
-        if (!activeSnapshot.empty) {
 
-            throw new Error("You already have an active investment. Upgrade will be available soon.");
+        const activeSnapshot =
+        await getDocs(activeQuery);
+
+
+
+        if(!activeSnapshot.empty){
+
+            throw new Error(
+                "You already have an active investment."
+            );
 
         }
 
 
 
-        // =============================
-        // DEDUCT WALLET
-        // =============================
-
-        await updateDoc(userRef, {
-
-            balance: Number(user.balance) - amount,
-
-            activePlan: {
-
-                planName: planName,
-
-                investmentAmount: amount,
-
-                dailyProfit: dailyProfit,
-
-                status: "Active",
-
-                startDate: new Date().toISOString(),
-
-                totalProfit: 0
-
-            }
-
-        });
-
-
 
         // =============================
-        // SAVE HISTORY
+        // CREATE INVESTMENT
         // =============================
+
 
         await addDoc(
-
-            collection(db, "investments"),
-
+            collection(db,"investments"),
             {
 
                 userId: currentUser.uid,
@@ -175,38 +193,219 @@ async function invest(button) {
 
                 dailyProfit: dailyProfit,
 
-                status: "Active",
+                totalProfit:0,
 
-                totalProfit: 0,
+                status:"Active",
 
-                createdAt: new Date().toISOString()
+                createdAt:
+                new Date().toISOString()
 
             }
-
         );
 
 
 
-        alert("🎉 Investment activated successfully!");
 
-        window.location.href = "dashboard.html";
+
+        // =============================
+        // DEDUCT USER BALANCE
+        // =============================
+
+
+        await updateDoc(
+            userRef,
+            {
+
+                balance:
+                Number(user.balance) - amount,
+
+
+                activePlan:{
+
+                    planName:planName,
+
+                    investmentAmount:amount,
+
+                    dailyProfit:dailyProfit,
+
+                    status:"Active",
+
+                    startDate:
+                    new Date().toISOString()
+
+                }
+
+            }
+        );
+
+
+
+
+
+
+
+        // =============================
+        // REFERRAL REWARD 20%
+        // FIRST INVESTMENT ONLY
+        // =============================
+
+
+        if(
+            user.referredBy &&
+            user.referralRewardPaid !== true
+        ){
+
+
+            const referralQuery =
+            query(
+
+                collection(db,"users"),
+
+                where(
+                    "referralCode",
+                    "==",
+                    user.referredBy
+                )
+
+            );
+
+
+
+            const referralSnapshot =
+            await getDocs(referralQuery);
+
+
+
+            if(!referralSnapshot.empty){
+
+
+
+                const referrerDoc =
+                referralSnapshot.docs[0];
+
+
+                const referrer =
+                referrerDoc.data();
+
+
+
+                const reward =
+                amount * 0.20;
+
+
+
+                const referrerRef =
+                doc(
+                    db,
+                    "users",
+                    referrerDoc.id
+                );
+
+
+
+
+                await updateDoc(
+                    referrerRef,
+                    {
+
+                        balance:
+                        Number(referrer.balance || 0)
+                        + reward,
+
+
+                        referralBonus:
+                        Number(referrer.referralBonus || 0)
+                        + reward
+
+                    }
+                );
+
+
+
+
+
+                await addDoc(
+                    collection(db,"referralRewards"),
+                    {
+
+                        referrerId:
+                        referrerDoc.id,
+
+
+                        referredUser:
+                        currentUser.uid,
+
+
+                        investmentAmount:
+                        amount,
+
+
+                        reward:
+                        reward,
+
+
+                        createdAt:
+                        new Date().toISOString()
+
+                    }
+                );
+
+
+
+
+
+                await updateDoc(
+                    userRef,
+                    {
+
+                        referralRewardPaid:true
+
+                    }
+                );
+
+
+            }
+
+
+        }
+
+
+
+
+        alert(
+            "🎉 Investment activated successfully!"
+        );
+
+
+        window.location.href =
+        "dashboard.html";
+
+
 
     }
 
-    catch (error) {
+
+    catch(error){
+
 
         console.error(error);
 
         alert(error.message);
 
+
     }
 
-    finally {
+
+    finally{
+
 
         button.disabled = false;
 
-        button.innerText = "Invest Now";
+        button.innerText =
+        "Invest Now";
+
 
     }
+
 
 }
