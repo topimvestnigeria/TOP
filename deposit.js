@@ -54,6 +54,12 @@ async function submitDeposit() {
 
         if (isNaN(amount) || amount <= 0) {
 
+        if(amount < 1000){
+
+            throw new Error("Minimum deposit is ₦1,000.");
+
+}
+
             throw new Error("Please enter a valid deposit amount.");
 
         }
