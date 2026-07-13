@@ -1097,3 +1097,43 @@ display:block;
 text-align:center;
 
 }
+
+
+/* Dashboard Statistics */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    padding:20px;
+}
+
+.stat-card{
+    background:#111;
+    color:#fff;
+    padding:20px;
+    border-radius:18px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+.stat-card i{
+    font-size:32px;
+    color:#d4af37;
+    margin-bottom:10px;
+}
+
+.stat-card h3{
+    font-size:24px;
+    margin:10px 0;
+}
+
+.stat-card p{
+    color:#bbb;
+}
+
+@media(max-width:600px){
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+}
