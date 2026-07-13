@@ -3,235 +3,436 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TOP | Dashboard</title>
+<title>TOP | Dashboard</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
 
+
 <body>
 
-    <!-- Header -->
 
-    <header class="top-header">
+<!-- HEADER -->
 
-        <div class="logo">
-            TOP
-        </div>
+<header class="top-header">
 
-        <p id="welcomeUser">
-            Welcome 👋
-        </p>
-
-        <div class="header-icons">
-
-            <i class="fa-solid fa-bell"></i>
-
-            <a href="profile.html">
-                <i class="fa-solid fa-user"></i>
-            </a>
-
-        </div>
-
-    </header>
+    <div class="logo">
+        TOP
+    </div>
 
 
-    <!-- Wallet Card -->
-
-    <section class="balance-card">
-
-        <p>Total Wallet Balance</p>
-
-        <h1 id="balance">
-            ₦0.00
-        </h1>
-
-        <div class="balance-buttons">
-
-            <a href="deposit.html" class="deposit-btn">
-
-                <i class="fa-solid fa-plus"></i>
-
-                Deposit
-
-            </a>
-
-            <a href="withdraw.html" class="withdraw-btn">
-
-                <i class="fa-solid fa-arrow-up"></i>
-
-                Withdraw
-
-            </a>
-
-        </div>
-
-    </section>
+    <p id="welcomeUser">
+        Welcome 👋
+    </p>
 
 
-    <!-- Quick Menu -->
+    <div class="header-icons">
 
-    <section class="menu-grid">
+        <i class="fa-solid fa-bell"></i>
 
-        <a href="plans.html" class="menu-item">
 
-            <i class="fa-solid fa-chart-line"></i>
-
-            <p>Investment</p>
-
-        </a>
-
-        <a href="history.html" class="menu-item">
-
-            <i class="fa-solid fa-clock-rotate-left"></i>
-
-            <p>History</p>
-
-        </a>
-
-        <a href="profile.html" class="menu-item">
+        <a href="profile.html">
 
             <i class="fa-solid fa-user"></i>
 
-            <p>Profile</p>
-
         </a>
 
-        <a href="deposit.html" class="menu-item">
+    </div>
 
-            <i class="fa-solid fa-money-bill-transfer"></i>
 
-            <p>Deposit</p>
+</header>
 
-        </a>
 
-        <a href="withdraw.html" class="menu-item">
 
-            <i class="fa-solid fa-building-columns"></i>
 
-            <p>Withdraw</p>
 
-        </a>
+<!-- WALLET -->
 
-        <a href="admin.html" class="menu-item">
+<section class="balance-card">
 
-            <i class="fa-solid fa-user-shield"></i>
 
-            <p>Admin</p>
+<p>
+Total Wallet Balance
+</p>
 
-        </a>
 
-    </section>
+<h1 id="balance">
+₦0.00
+</h1>
 
 
-    <!-- Active Investment -->
 
-    <section class="card">
+<div class="balance-buttons">
 
-        <h2>
 
-            <i class="fa-solid fa-chart-column"></i>
+<a href="deposit.html" class="deposit-btn">
 
-            Active Investment
+<i class="fa-solid fa-plus"></i>
 
-        </h2>
+Deposit
 
-        <div id="activeInvestment">
+</a>
 
-            <p>No active investment yet.</p>
 
-        </div>
 
-    </section>
 
+<a href="withdraw.html" class="withdraw-btn">
 
-    <!-- Referral -->
+<i class="fa-solid fa-arrow-up"></i>
 
-    <section class="referral-card">
+Withdraw
 
-        <h2>
+</a>
 
-            <i class="fa-solid fa-user-plus"></i>
 
-            Referral Program
+</div>
 
-        </h2>
 
-        <p>
+</section>
 
-            Invite friends and earn referral rewards.
 
-        </p>
 
-        <p>
 
-            <strong>Your Referral Code</strong>
 
-        </p>
 
-        <h3 id="referralCode">
+<!-- SUMMARY CARDS -->
 
-            Loading...
 
-        </h3>
+<section class="stats-grid">
 
-        <button
-            id="copyReferralBtn"
-            class="btn">
 
-            Copy Referral Code
+<div class="stat-card">
 
-        </button>
+<i class="fa-solid fa-chart-line"></i>
 
-    </section>
+<h3 id="totalProfit">
+₦0
+</h3>
 
+<p>
+Total Profit
+</p>
 
-    <!-- Bottom Navigation -->
+</div>
 
-    <nav class="bottom-nav">
 
-        <a href="dashboard.html" class="nav-item active">
 
-            <i class="fa-solid fa-house"></i>
 
-            <p>Home</p>
 
-        </a>
+<div class="stat-card">
 
-        <a href="plans.html" class="nav-item">
+<i class="fa-solid fa-gift"></i>
 
-            <i class="fa-solid fa-chart-line"></i>
+<h3 id="referralBonus">
+₦0
+</h3>
 
-            <p>Plans</p>
+<p>
+Referral Bonus
+</p>
 
-        </a>
+</div>
 
-        <a href="history.html" class="nav-item">
 
-            <i class="fa-solid fa-clock"></i>
 
-            <p>History</p>
 
-        </a>
 
-        <a href="profile.html" class="nav-item">
+<div class="stat-card">
 
-            <i class="fa-solid fa-user"></i>
+<i class="fa-solid fa-users"></i>
 
-            <p>Account</p>
+<h3 id="totalReferrals">
+0
+</h3>
 
-        </a>
+<p>
+Team Members
+</p>
 
-    </nav>
+</div>
 
 
-    <script type="module" src="dashboard.js"></script>
+
+</section>
+
+
+
+
+
+
+
+<!-- QUICK MENU -->
+
+
+<section class="menu-grid">
+
+
+
+<a href="plans.html" class="menu-item">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<p>
+Investment
+</p>
+
+</a>
+
+
+
+
+
+<a href="history.html" class="menu-item">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+<p>
+History
+</p>
+
+</a>
+
+
+
+
+
+<a href="profile.html" class="menu-item">
+
+<i class="fa-solid fa-user"></i>
+
+<p>
+Profile
+</p>
+
+</a>
+
+
+
+
+
+<a href="deposit.html" class="menu-item">
+
+<i class="fa-solid fa-money-bill-transfer"></i>
+
+<p>
+Deposit
+</p>
+
+</a>
+
+
+
+
+
+<a href="withdraw.html" class="menu-item">
+
+<i class="fa-solid fa-building-columns"></i>
+
+<p>
+Withdraw
+</p>
+
+</a>
+
+
+
+
+</section>
+
+
+
+
+
+
+
+<!-- ACTIVE INVESTMENT -->
+
+
+<section class="card">
+
+
+<h2>
+
+<i class="fa-solid fa-chart-column"></i>
+
+Active Investment
+
+</h2>
+
+
+
+<div id="activeInvestment">
+
+<p>
+No active investment yet.
+</p>
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- REFERRAL SYSTEM -->
+
+
+<section class="referral-card">
+
+
+<h2>
+
+<i class="fa-solid fa-user-plus"></i>
+
+Referral Program
+
+</h2>
+
+
+
+
+<p>
+
+Invite friends and earn rewards.
+
+</p>
+
+
+
+
+
+<p>
+
+<strong>
+Your Referral Code
+</strong>
+
+</p>
+
+
+
+
+<h3 id="referralCode">
+
+Loading...
+
+</h3>
+
+
+
+
+
+<button
+id="copyReferralBtn"
+class="btn">
+
+Copy Invitation Link
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- BOTTOM NAV -->
+
+
+<nav class="bottom-nav">
+
+
+<a href="dashboard.html"
+class="nav-item active">
+
+
+<i class="fa-solid fa-house"></i>
+
+<p>
+Home
+</p>
+
+
+</a>
+
+
+
+
+
+<a href="plans.html"
+class="nav-item">
+
+
+<i class="fa-solid fa-chart-line"></i>
+
+<p>
+Plans
+</p>
+
+
+</a>
+
+
+
+
+
+<a href="history.html"
+class="nav-item">
+
+
+<i class="fa-solid fa-clock"></i>
+
+<p>
+History
+</p>
+
+
+</a>
+
+
+
+
+
+<a href="profile.html"
+class="nav-item">
+
+
+<i class="fa-solid fa-user"></i>
+
+<p>
+Account
+</p>
+
+
+</a>
+
+
+
+</nav>
+
+
+
+
+
+<script type="module" src="dashboard.js"></script>
+
 
 </body>
 
