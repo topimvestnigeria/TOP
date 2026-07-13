@@ -10,7 +10,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
+
 onAuthStateChanged(auth, async (user) => {
+
 
     if (!user) {
 
@@ -20,15 +22,20 @@ onAuthStateChanged(auth, async (user) => {
 
     }
 
+
+
     try {
 
-        // ==========================
-        // USER DATA
-        // ==========================
 
-        const userRef = doc(db, "users", user.uid);
+        const userRef =
+        doc(db, "users", user.uid);
 
-        const userSnap = await getDoc(userRef);
+
+
+        const userSnap =
+        await getDoc(userRef);
+
+
 
         if (!userSnap.exists()) {
 
@@ -38,146 +45,324 @@ onAuthStateChanged(auth, async (user) => {
 
         }
 
-        const data = userSnap.data();
+
+
+        const data =
+        userSnap.data();
+
+
+
 
 
         // ==========================
-        // WELCOME MESSAGE
+        // BASIC USER DATA
         // ==========================
+
 
         document.getElementById("welcomeUser").innerText =
-            `Welcome, ${data.fullname} 👋`;
+        `Welcome, ${data.fullname} 👋`;
+
+
 
         document.getElementById("balance").innerText =
-            "₦" + Number(data.balance || 0).toLocaleString();
+        "₦" +
+        Number(data.balance || 0)
+        .toLocaleString();
+
+
+
+
+
 
 
         // ==========================
-        // REFERRAL CODE
+        // PROFIT INFORMATION
         // ==========================
 
-        const referralElement =
-            document.getElementById("referralCode");
 
-        if (referralElement) {
+        const totalProfit =
+        document.getElementById("totalProfit");
 
-            referralElement.innerText =
-                data.referralCode || "Not Available";
+
+        if(totalProfit){
+
+            totalProfit.innerText =
+            "₦" +
+            Number(data.totalProfit || 0)
+            .toLocaleString();
 
         }
+
+
+
+
+
+        const referralBonus =
+        document.getElementById("referralBonus");
+
+
+        if(referralBonus){
+
+            referralBonus.innerText =
+            "₦" +
+            Number(data.referralBonus || 0)
+            .toLocaleString();
+
+        }
+
+
+
+
+
+        const totalReferrals =
+        document.getElementById("totalReferrals");
+
+
+        if(totalReferrals){
+
+            totalReferrals.innerText =
+            Number(data.totalReferrals || 0);
+
+        }
+
+
+
+
+
+
+
+        // ==========================
+        // REFERRAL LINK
+        // ==========================
+
+
+        const referralElement =
+        document.getElementById("referralCode");
+
+
+
+        if(referralElement){
+
+            referralElement.innerText =
+            data.referralCode || "Not Available";
+
+        }
+
+
+
 
 
         const copyBtn =
-            document.getElementById("copyReferralBtn");
+        document.getElementById("copyReferralBtn");
 
-        if (copyBtn) {
 
-            copyBtn.addEventListener("click", async () => {
 
-                try {
+        if(copyBtn){
+
+
+            copyBtn.addEventListener(
+            "click",
+            async()=>{
+
+
+                const referralLink =
+                window.location.origin +
+                "/signup.html?ref=" +
+                data.referralCode;
+
+
+
+                try{
+
 
                     await navigator.clipboard.writeText(
-                        data.referralCode || ""
+                        referralLink
                     );
 
-                    alert("Referral code copied successfully!");
+
+                    alert(
+                        "Invitation link copied successfully!"
+                    );
+
 
                 }
 
-                catch {
 
-                    alert("Unable to copy referral code.");
+                catch(error){
+
+
+                    alert(
+                        "Unable to copy link."
+                    );
+
 
                 }
+
+
 
             });
 
+
         }
+
+
+
+
+
+
 
 
         // ==========================
         // ACTIVE INVESTMENT
         // ==========================
 
+
         const investmentContainer =
-            document.getElementById("activeInvestment");
+        document.getElementById("activeInvestment");
 
-        if (investmentContainer) {
 
-            if (!data.activePlan) {
 
-                investmentContainer.innerHTML = `
+        if(investmentContainer){
 
-                    <p>No active investment yet.</p>
 
-                `;
 
-            }
+            if(!data.activePlan){
 
-            else {
 
                 investmentContainer.innerHTML = `
 
-                    <div class="transaction-card">
-
-                        <h3>${data.activePlan.planName}</h3>
-
-                        <p>
-
-                            <strong>Investment:</strong>
-
-                            ₦${Number(data.activePlan.investmentAmount).toLocaleString()}
-
-                        </p>
-
-                        <p>
-
-                            <strong>Daily Profit:</strong>
-
-                            ₦${Number(data.activePlan.dailyProfit).toLocaleString()}
-
-                        </p>
-
-                        <p>
-
-                            <strong>Total Profit:</strong>
-
-                            ₦${Number(data.activePlan.totalProfit || 0).toLocaleString()}
-
-                        </p>
-
-                        <p>
-
-                            <strong>Status:</strong>
-
-                            🟢 ${data.activePlan.status}
-
-                        </p>
-
-                        <p>
-
-                            <strong>Started:</strong>
-
-                            ${new Date(data.activePlan.startDate).toLocaleDateString()}
-
-                        </p>
-
-                    </div>
+                <p>
+                No active investment yet.
+                </p>
 
                 `;
 
+
             }
+
+
+
+            else{
+
+
+                investmentContainer.innerHTML = `
+
+
+                <div class="transaction-card">
+
+
+                <h3>
+                ${data.activePlan.planName}
+                </h3>
+
+
+
+                <p>
+
+                <strong>
+                Investment:
+                </strong>
+
+                ₦${Number(
+                    data.activePlan.investmentAmount
+                ).toLocaleString()}
+
+                </p>
+
+
+
+
+                <p>
+
+                <strong>
+                Daily Profit:
+                </strong>
+
+                ₦${Number(
+                    data.activePlan.dailyProfit
+                ).toLocaleString()}
+
+                </p>
+
+
+
+
+
+                <p>
+
+                <strong>
+                Total Profit:
+                </strong>
+
+                ₦${Number(
+                    data.activePlan.totalProfit || 0
+                ).toLocaleString()}
+
+                </p>
+
+
+
+
+
+                <p>
+
+                <strong>
+                Status:
+                </strong>
+
+                🟢 ${data.activePlan.status}
+
+                </p>
+
+
+
+
+
+                <p>
+
+                <strong>
+                Started:
+                </strong>
+
+                ${
+                    new Date(
+                    data.activePlan.startDate
+                    )
+                    .toLocaleDateString()
+                }
+
+                </p>
+
+
+
+                </div>
+
+
+                `;
+
+
+            }
+
 
         }
 
+
+
+
+
     }
 
-    catch (error) {
+
+    catch(error){
+
 
         console.error(error);
 
         alert(error.message);
 
+
     }
+
+
 
 });
