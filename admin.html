@@ -13,197 +13,357 @@
     <link rel="stylesheet" href="style.css">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
 
+
 <body>
 
-    <!-- =========================
-         HEADER
-    ========================== -->
 
-    <header class="top-header">
+<header class="top-header">
 
-        <div class="logo">
-            TOP ADMIN
-        </div>
 
-        <div class="header-icons">
+    <div class="logo">
+        TOP ADMIN
+    </div>
 
-            <i class="fa-solid fa-user-shield"></i>
 
-        </div>
+    <div class="header-icons">
 
-    </header>
+        <i class="fa-solid fa-user-shield"></i>
 
+    </div>
 
 
-    <!-- =========================
-         MAIN CONTENT
-    ========================== -->
+</header>
 
-    <main class="dashboard">
 
 
 
-        <!-- Dashboard Statistics -->
 
-        <section class="stats-grid">
+<main class="dashboard">
 
-            <div class="stat-card">
 
-                <i class="fa-solid fa-users"></i>
 
-                <h3 id="totalUsers">0</h3>
+<!-- ======================
+STATISTICS
+======================= -->
 
-                <p>Total Users</p>
 
-            </div>
+<section class="stats-grid">
 
-            <div class="stat-card">
 
-                <i class="fa-solid fa-wallet"></i>
+<div class="stat-card">
 
-                <h3 id="totalDeposits">₦0</h3>
+<i class="fa-solid fa-users"></i>
 
-                <p>Total Deposits</p>
+<h3 id="totalUsers">
+0
+</h3>
 
-            </div>
+<p>
+Total Users
+</p>
 
-            <div class="stat-card">
+</div>
 
-                <i class="fa-solid fa-money-bill-transfer"></i>
 
-                <h3 id="totalWithdrawals">₦0</h3>
 
-                <p>Total Withdrawals</p>
 
-            </div>
+<div class="stat-card">
 
-            <div class="stat-card">
+<i class="fa-solid fa-wallet"></i>
 
-                <i class="fa-solid fa-chart-line"></i>
+<h3 id="totalDeposits">
+₦0
+</h3>
 
-                <h3 id="activePlans">0</h3>
+<p>
+Total Deposits
+</p>
 
-                <p>Active Investments</p>
+</div>
 
-            </div>
 
-        </section>
 
 
 
-        <!-- Deposit Requests -->
+<div class="stat-card">
 
-        <section class="card">
+<i class="fa-solid fa-money-bill-transfer"></i>
 
-            <h2>
+<h3 id="totalWithdrawals">
+₦0
+</h3>
 
-                <i class="fa-solid fa-circle-down"></i>
+<p>
+Total Withdrawals
+</p>
 
-                Deposit Requests
+</div>
 
-            </h2>
 
-            <div id="depositList">
 
-                <p>Loading deposits...</p>
 
-            </div>
 
-        </section>
+<div class="stat-card">
 
+<i class="fa-solid fa-chart-line"></i>
 
+<h3 id="activePlans">
+0
+</h3>
 
-        <!-- Withdrawal Requests -->
+<p>
+Active Investments
+</p>
 
-        <section class="card">
+</div>
 
-            <h2>
 
-                <i class="fa-solid fa-circle-up"></i>
+</section>
 
-                Withdrawal Requests
 
-            </h2>
 
-            <div id="withdrawList">
 
-                <p>Loading withdrawals...</p>
 
-            </div>
 
-        </section>
 
+<!-- ======================
+DEPOSITS
+======================= -->
 
 
-        <!-- Active Investments -->
+<section class="card">
 
-        <section class="card">
 
-            <h2>
+<h2>
 
-                <i class="fa-solid fa-chart-column"></i>
+<i class="fa-solid fa-circle-down"></i>
 
-                Active Investments
+Deposit Requests
 
-            </h2>
+</h2>
 
-            <div id="investmentList">
 
-                <p>Loading investments...</p>
 
-            </div>
+<div id="depositList">
 
-        </section>
+<p>
+Loading deposits...
+</p>
 
 
+</div>
 
-        <!-- Registered Users -->
 
-        <section class="card">
+</section>
 
-            <h2>
 
-                <i class="fa-solid fa-users"></i>
 
-                Registered Users
 
-            </h2>
 
-            <div id="userList">
 
-                <p>Loading users...</p>
 
-            </div>
 
-        </section>
+<!-- ======================
+WITHDRAWALS
+======================= -->
 
 
+<section class="card">
 
-        <!-- Footer Buttons -->
 
-        <div class="admin-buttons">
+<h2>
 
-            <a href="dashboard.html" class="btn">
+<i class="fa-solid fa-circle-up"></i>
 
-                <i class="fa-solid fa-arrow-left"></i>
+Withdrawal Requests
 
-                Back to Dashboard
+</h2>
 
-            </a>
 
-        </div>
 
+<div id="withdrawList">
 
+<p>
+Loading withdrawals...
+</p>
 
-    </main>
 
+</div>
 
 
-    <script type="module" src="admin.js"></script>
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ======================
+INVESTMENTS
+======================= -->
+
+
+<section class="card">
+
+
+<h2>
+
+<i class="fa-solid fa-chart-column"></i>
+
+Active Investments
+
+</h2>
+
+
+
+<div id="investmentList">
+
+<p>
+Loading investments...
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ======================
+REFERRAL REWARDS
+======================= -->
+
+
+<section class="card">
+
+
+<h2>
+
+<i class="fa-solid fa-user-plus"></i>
+
+Referral Rewards
+
+</h2>
+
+
+
+<div id="referralList">
+
+<p>
+Loading referral rewards...
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ======================
+USERS
+======================= -->
+
+
+<section class="card">
+
+
+<h2>
+
+<i class="fa-solid fa-users"></i>
+
+Registered Users
+
+</h2>
+
+
+
+<div id="userList">
+
+<p>
+Loading users...
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ======================
+BUTTONS
+======================= -->
+
+
+<div class="admin-buttons">
+
+
+<a href="dashboard.html"
+class="btn">
+
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Back To Dashboard
+
+
+</a>
+
+
+
+<button id="logoutAdminBtn"
+class="btn">
+
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Logout
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+</main>
+
+
+
+
+
+<script type="module" src="admin.js"></script>
+
 
 </body>
 
