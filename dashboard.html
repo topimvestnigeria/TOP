@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TOP | Dashboard</title>
+<title>TOP Invest | Dashboard</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -24,13 +24,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 <header class="top-header">
 
     <div class="logo">
-        TOP
+        ◈ TOP Invest
     </div>
-
-
-    <p id="welcomeUser">
-        Welcome 👋
-    </p>
 
 
     <div class="header-icons">
@@ -46,8 +41,28 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
     </div>
 
-
 </header>
+
+
+
+
+<main class="dashboard-container">
+
+
+
+<!-- WELCOME -->
+
+<section class="welcome-card">
+
+    <h2 id="welcomeUser">
+        Welcome 👋
+    </h2>
+
+    <p>
+        Smart Investments. Daily Rewards.
+    </p>
+
+</section>
 
 
 
@@ -55,11 +70,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <!-- WALLET -->
 
-<section class="balance-card">
+<section class="wallet-card">
 
 
 <p>
-Total Wallet Balance
+Available Balance
 </p>
 
 
@@ -69,10 +84,10 @@ Total Wallet Balance
 
 
 
-<div class="balance-buttons">
+<div class="wallet-actions">
 
 
-<a href="deposit.html" class="deposit-btn">
+<a href="deposit.html" class="wallet-btn deposit">
 
 <i class="fa-solid fa-plus"></i>
 
@@ -82,8 +97,7 @@ Deposit
 
 
 
-
-<a href="withdraw.html" class="withdraw-btn">
+<a href="withdraw.html" class="wallet-btn withdraw">
 
 <i class="fa-solid fa-arrow-up"></i>
 
@@ -102,13 +116,14 @@ Withdraw
 
 
 
-<!-- SUMMARY CARDS -->
+
+<!-- STATISTICS -->
 
 
-<section class="stats-grid">
+<section class="dashboard-stats">
 
 
-<div class="stat-card">
+<div class="dashboard-stat-card">
 
 <i class="fa-solid fa-chart-line"></i>
 
@@ -125,8 +140,7 @@ Total Profit
 
 
 
-
-<div class="stat-card">
+<div class="dashboard-stat-card">
 
 <i class="fa-solid fa-gift"></i>
 
@@ -144,7 +158,7 @@ Referral Bonus
 
 
 
-<div class="stat-card">
+<div class="dashboard-stat-card">
 
 <i class="fa-solid fa-users"></i>
 
@@ -159,7 +173,6 @@ Team Members
 </div>
 
 
-
 </section>
 
 
@@ -171,80 +184,82 @@ Team Members
 <!-- QUICK MENU -->
 
 
-<section class="menu-grid">
+<section class="card">
 
 
-
-<a href="plans.html" class="menu-item">
-
-<i class="fa-solid fa-chart-line"></i>
-
-<p>
-Investment
-</p>
-
-</a>
+<h2>
+Quick Actions
+</h2>
 
 
+<div class="quick-grid">
 
 
+<a href="plans.html">
 
-<a href="history.html" class="menu-item">
+<i class="fa-solid fa-chart-pie"></i>
 
-<i class="fa-solid fa-clock-rotate-left"></i>
-
-<p>
-History
-</p>
+<span>
+Invest
+</span>
 
 </a>
 
 
 
+<a href="deposit.html">
 
+<i class="fa-solid fa-wallet"></i>
 
-<a href="profile.html" class="menu-item">
-
-<i class="fa-solid fa-user"></i>
-
-<p>
-Profile
-</p>
+<span>
+Deposit
+</span>
 
 </a>
 
 
 
-
-
-<a href="deposit.html" class="menu-item">
+<a href="withdraw.html">
 
 <i class="fa-solid fa-money-bill-transfer"></i>
 
-<p>
-Deposit
-</p>
-
-</a>
-
-
-
-
-
-<a href="withdraw.html" class="menu-item">
-
-<i class="fa-solid fa-building-columns"></i>
-
-<p>
+<span>
 Withdraw
-</p>
+</span>
 
 </a>
 
 
+
+<a href="history.html">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+<span>
+History
+</span>
+
+</a>
+
+
+
+<a href="profile.html">
+
+<i class="fa-solid fa-user"></i>
+
+<span>
+Profile
+</span>
+
+</a>
+
+
+
+</div>
 
 
 </section>
+
 
 
 
@@ -274,6 +289,7 @@ Active Investment
 No active investment yet.
 </p>
 
+
 </div>
 
 
@@ -286,7 +302,7 @@ No active investment yet.
 
 
 
-<!-- REFERRAL SYSTEM -->
+<!-- REFERRAL -->
 
 
 <section class="referral-card">
@@ -294,12 +310,11 @@ No active investment yet.
 
 <h2>
 
-<i class="fa-solid fa-user-plus"></i>
+<i class="fa-solid fa-users"></i>
 
 Referral Program
 
 </h2>
-
 
 
 
@@ -312,24 +327,20 @@ Invite friends and earn rewards.
 
 
 
-
-<p>
-
-<strong>
+<h3>
 Your Referral Code
-</strong>
-
-</p>
+</h3>
 
 
+<div class="referral-code">
 
-
-<h3 id="referralCode">
+<span id="referralCode">
 
 Loading...
 
-</h3>
+</span>
 
+</div>
 
 
 
@@ -338,14 +349,21 @@ Loading...
 id="copyReferralBtn"
 class="btn">
 
+<i class="fa-solid fa-copy"></i>
+
 Copy Invitation Link
 
 </button>
 
 
-
 </section>
 
+
+
+
+
+
+</main>
 
 
 
@@ -362,33 +380,26 @@ Copy Invitation Link
 <a href="dashboard.html"
 class="nav-item active">
 
-
 <i class="fa-solid fa-house"></i>
 
-<p>
+<span>
 Home
-</p>
-
+</span>
 
 </a>
-
-
 
 
 
 <a href="plans.html"
 class="nav-item">
 
-
 <i class="fa-solid fa-chart-line"></i>
 
-<p>
+<span>
 Plans
-</p>
-
+</span>
 
 </a>
-
 
 
 
@@ -396,16 +407,13 @@ Plans
 <a href="history.html"
 class="nav-item">
 
-
 <i class="fa-solid fa-clock"></i>
 
-<p>
+<span>
 History
-</p>
-
+</span>
 
 </a>
-
 
 
 
@@ -413,16 +421,13 @@ History
 <a href="profile.html"
 class="nav-item">
 
-
 <i class="fa-solid fa-user"></i>
 
-<p>
+<span>
 Account
-</p>
-
+</span>
 
 </a>
-
 
 
 </nav>
