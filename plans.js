@@ -92,3 +92,112 @@ async function loadPlans() {
     });
 
 }
+
+async function invest(planId) {
+
+    try {
+
+        // Load selected plan
+        const planRef = doc(db, "plans", planId);
+        const planSnap = await getDoc(planRef);
+
+        if (!planSnap.exists()) {
+            alert("Investment plan not found.");
+            return;
+        }
+
+        const plan = planSnap.data();
+
+        const amount = Number(plan.amount);
+        const dailyProfit = Number(plan.dailyProfit);
+        const duration = Number(plan.duration);
+        const planName = plan.name;
+
+        // Get current user
+        const userRef = doc(db, "users", currentUser.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+            alert("User account not found.");
+            return;
+        }
+
+        const userData = userSnap.data();
+
+        // Wallet balance check
+        if ((userData.balance || 0) < amount) {
+            alert("Insufficient wallet balance.");
+            return;
+        }
+
+        // Check active investment
+        const investmentQuery = query(
+            collection(db, "investments"),
+            where("userId", "==", currentUser.uid),
+            where("status", "==", "Active")
+        );
+
+        const investmentSnap = await getDocs(investmentQuery);
+
+        if (!investmentSnap.empty) {
+            alert("You already have an active investment.");
+            return;
+        }
+
+        // Deduct wallet
+        await updateDoc(userRef, {
+            balance: increment(-amount)
+        });
+
+        // Calculate end date
+        const endDate = new Date();
+        endDate.setDate(endDate.getDate() + duration);
+
+        // Create investment
+        await addDoc(collection(db, "investments"), {
+
+            userId: currentUser.uid,
+
+            planId,
+
+            planName,
+
+            investmentAmount: amount,
+
+            dailyProfit,
+
+            duration,
+
+            daysPaid: 0,
+
+            remainingDays: duration,
+
+            totalProfit: 0,
+
+            status: "Active",
+
+            createdAt: serverTimestamp(),
+
+            lastProfitDate: serverTimestamp(),
+
+            endDate
+
+        });
+
+        alert("Investment activated successfully!");
+
+        window.location.href = "dashboard.html";
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
+
+}
+
+window.invest = invest;
