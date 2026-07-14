@@ -99,19 +99,70 @@ async function invest(button){
 
 
 
-        const planName =
-        button.dataset.name;
+        async function loadPlans(){
 
+    const plansContainer =
+    document.getElementById("plansContainer");
 
+    plansContainer.innerHTML = "";
 
-        const amount =
-        Number(button.dataset.amount);
+    const q = query(
+        collection(db,"plans"),
+        where("active","==",true)
+    );
 
+    const snapshot =
+    await getDocs(q);
 
+    snapshot.forEach((doc)=>{
 
-        const dailyProfit =
-        Number(button.dataset.profit);
+        const plan = doc.data();
 
+        plansContainer.innerHTML += `
+
+        <div class="plan-card">
+
+            <h3>${plan.name}</h3>
+
+            <p>
+
+                <strong>Investment</strong>
+
+                ₦${Number(plan.amount).toLocaleString()}
+
+            </p>
+
+            <p>
+
+                <strong>Daily Profit</strong>
+
+                ₦${Number(plan.dailyProfit).toLocaleString()}
+
+            </p>
+
+            <p>
+
+                <strong>Duration</strong>
+
+                ${plan.duration} Days
+
+            </p>
+
+            <button
+                class="plan-btn"
+                data-id="${doc.id}">
+
+                Invest Now
+
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+}
 
 
 
