@@ -1,3 +1,8 @@
+import {
+    updateDoc,
+    increment,
+    Timestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 import { auth, db } from "./firebase.js";
 
 import {
@@ -341,6 +346,9 @@ async function loadInvestment(uid){
     const investment =
     snapshot.docs[0].data();
 
+    const investmentRef = snapshot.docs[0].ref;
+
+    await processDailyProfit(investmentRef, investment);
 
 
 
