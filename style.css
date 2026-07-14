@@ -854,3 +854,261 @@ label{
 
 
 }
+
+
+/* =====================================
+   TOP INVESTMENT PLANS
+===================================== */
+
+
+#plansContainer{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:20px;
+
+}
+
+
+
+
+
+/* PLAN CARD */
+
+.plan-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    box-shadow:var(--shadow);
+
+    position:relative;
+
+    overflow:hidden;
+
+    transition:.3s;
+
+}
+
+
+
+.plan-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+
+
+
+.plan-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:5px;
+
+    background:
+    linear-gradient(
+        90deg,
+        var(--gold),
+        #f8df8a
+    );
+
+}
+
+
+
+
+
+.plan-card h3{
+
+    font-size:24px;
+
+    margin-bottom:15px;
+
+    color:var(--dark);
+
+}
+
+
+
+
+
+.plan-card p{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    background:#f9fafb;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    margin:10px 0;
+
+    color:#374151;
+
+}
+
+
+
+
+
+.plan-card strong{
+
+    color:var(--dark);
+
+}
+
+
+
+
+.plan-profit{
+
+    background:
+    linear-gradient(
+        135deg,
+        #111827,
+        #374151
+    );
+
+    color:white;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    margin:15px 0;
+
+}
+
+
+
+
+.plan-profit h2{
+
+    color:var(--gold);
+
+    font-size:30px;
+
+}
+
+
+
+
+.plan-btn{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:var(--gold);
+
+    color:black;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+
+.plan-btn:hover{
+
+    transform:scale(1.03);
+
+    background:#f5d76e;
+
+}
+
+
+
+
+
+/* POPULAR PLAN */
+
+.popular{
+
+    border:2px solid var(--gold);
+
+}
+
+
+
+.popular-label{
+
+    position:absolute;
+
+    top:15px;
+
+    right:-35px;
+
+    background:var(--gold);
+
+    color:black;
+
+    padding:8px 40px;
+
+    transform:rotate(45deg);
+
+    font-size:12px;
+
+    font-weight:bold;
+
+}
+
+
+
+
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+
+#plansContainer{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+
+}
+
+
+
+@media(max-width:600px){
+
+
+#plansContainer{
+
+    grid-template-columns:1fr;
+
+}
+
+
+}
