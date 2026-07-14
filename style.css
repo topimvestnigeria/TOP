@@ -366,3 +366,491 @@ label{
     animation:fadeUp .45s ease;
 
 }
+
+/* =====================================
+   TOP INVEST DASHBOARD v2
+===================================== */
+
+
+/* MAIN DASHBOARD */
+
+.dashboard-container{
+
+    width:92%;
+    max-width:1200px;
+    margin:25px auto 100px;
+
+}
+
+
+/* HEADER */
+
+.top-header{
+
+    background:linear-gradient(
+        135deg,
+        #111827,
+        #1f2937
+    );
+
+    padding:18px 25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
+
+}
+
+
+.top-header .logo{
+
+    color:var(--gold);
+
+    font-size:26px;
+
+}
+
+
+.header-icons{
+
+    display:flex;
+
+    gap:20px;
+
+}
+
+
+.header-icons i{
+
+    color:white;
+
+    font-size:22px;
+
+}
+
+
+
+/* WELCOME */
+
+.welcome-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:22px;
+
+    margin-bottom:20px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+.welcome-card h2{
+
+    color:var(--dark);
+
+}
+
+
+
+
+
+/* WALLET CARD */
+
+.wallet-card{
+
+    background:
+    linear-gradient(
+        135deg,
+        #111827,
+        #374151
+    );
+
+    color:white;
+
+    padding:30px;
+
+    border-radius:28px;
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,.25);
+
+    margin-bottom:25px;
+
+}
+
+
+.wallet-card p{
+
+    color:#d1d5db;
+
+}
+
+
+.wallet-card h1{
+
+    color:var(--gold);
+
+    font-size:42px;
+
+    margin:15px 0;
+
+}
+
+
+
+
+.wallet-actions{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+
+
+.wallet-btn{
+
+    flex:1;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+.wallet-btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+
+.wallet-btn.deposit{
+
+    background:var(--gold);
+
+    color:#000;
+
+}
+
+
+
+.wallet-btn.withdraw{
+
+    background:white;
+
+    color:#111;
+
+}
+
+
+
+
+
+/* STATISTICS */
+
+
+.dashboard-stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:15px;
+
+    margin-bottom:25px;
+
+}
+
+
+
+.dashboard-stat-card{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+.dashboard-stat-card i{
+
+    font-size:30px;
+
+    color:var(--gold);
+
+    margin-bottom:10px;
+
+}
+
+
+
+.dashboard-stat-card h3{
+
+    color:var(--dark);
+
+    font-size:20px;
+
+}
+
+
+
+/* QUICK MENU */
+
+
+.quick-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(5,1fr);
+
+    gap:15px;
+
+    margin-top:20px;
+
+}
+
+
+
+.quick-grid a{
+
+    background:#f9fafb;
+
+    padding:20px 10px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    transition:.3s;
+
+}
+
+
+
+.quick-grid a:hover{
+
+    transform:translateY(-5px);
+
+    background:#fff;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+.quick-grid i{
+
+    display:block;
+
+    color:var(--primary);
+
+    font-size:30px;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.quick-grid span{
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+
+
+
+
+/* REFERRAL */
+
+
+.referral-card{
+
+    background:
+    linear-gradient(
+        135deg,
+        #D4AF37,
+        #f8df8a
+    );
+
+    color:#111;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    margin-top:20px;
+
+}
+
+
+
+.referral-card p{
+
+    color:#333;
+
+}
+
+
+
+.referral-code{
+
+    background:white;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    margin:15px 0;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+}
+
+
+
+
+
+/* BOTTOM NAV UPDATE */
+
+
+.bottom-nav{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    background:#111827;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    padding:14px;
+
+    z-index:1000;
+
+}
+
+
+
+.nav-item{
+
+    color:#9ca3af;
+
+    text-align:center;
+
+    font-size:13px;
+
+}
+
+
+
+.nav-item i{
+
+    display:block;
+
+    font-size:22px;
+
+    margin-bottom:5px;
+
+}
+
+
+
+.nav-item.active{
+
+    color:var(--gold);
+
+}
+
+
+
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+
+.dashboard-stats{
+
+    grid-template-columns:1fr;
+
+}
+
+
+
+.quick-grid{
+
+    grid-template-columns:repeat(3,1fr);
+
+}
+
+
+
+.wallet-actions{
+
+    flex-direction:column;
+
+}
+
+
+
+.wallet-card h1{
+
+    font-size:34px;
+
+}
+
+
+}
+
+
+@media(max-width:450px){
+
+
+.quick-grid{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+
+}
