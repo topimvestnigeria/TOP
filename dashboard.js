@@ -270,6 +270,80 @@ async function loadUserData(uid){
 // ==========================
 
 
+async function processDailyProfit(investmentRef, investment) {
+
+    if (investment.status !== "Active") return;
+
+    const now = new Date();
+
+    const lastProfit = investment.lastProfitDate.toDate();
+
+    const oneDay = 24 * 60 * 60 * 1000;
+
+    if ((now - lastProfit) < oneDay) return;
+
+    const userRef = doc(db, "users", investment.userId);
+
+    if (investment.remainingDays <= 1) {
+
+        await updateDoc(userRef, {
+            balance: increment(
+                investment.dailyProfit +
+                investment.investmentAmount
+            ),
+            totalProfit: increment(
+                investment.dailyProfit
+            )
+        });
+
+        await updateDoc(investmentRef, {
+
+            totalProfit: increment(
+                investment.dailyProfit
+            ),
+
+            daysPaid: increment(1),
+
+            remainingDays: 0,
+
+            status: "Completed",
+
+            lastProfitDate: Timestamp.now()
+
+        });
+
+    } else {
+
+        await updateDoc(userRef, {
+
+            balance: increment(
+                investment.dailyProfit
+            ),
+
+            totalProfit: increment(
+                investment.dailyProfit
+            )
+
+        });
+
+        await updateDoc(investmentRef, {
+
+            totalProfit: increment(
+                investment.dailyProfit
+            ),
+
+            daysPaid: increment(1),
+
+            remainingDays: increment(-1),
+
+            lastProfitDate: Timestamp.now()
+
+        });
+
+    }
+
+}
+
 async function loadInvestment(uid){
 
 
