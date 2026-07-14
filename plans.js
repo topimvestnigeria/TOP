@@ -221,39 +221,33 @@ async function invest(button){
 
 
         await addDoc(
-            collection(db,"investments"),
-            {
+    collection(db,"investments"),
+    {
 
-                userId:
-                currentUser.uid,
+        userId: currentUser.uid,
 
-                email:
-                currentUser.email,
+        email: currentUser.email,
 
+        planName,
 
-                planName,
+        investmentAmount: amount,
 
+        dailyProfit: dailyProfit,
 
-                investmentAmount:
-                amount,
+        totalProfit: 0,
 
+        daysPaid: 0,
 
-                dailyProfit,
+        duration: 30,
 
+        status: "Active",
 
-                totalProfit:0,
+        createdAt: serverTimestamp(),
 
+        lastProfitDate: serverTimestamp()
 
-                status:
-                "Active",
-
-
-                createdAt:
-                serverTimestamp()
-
-            }
-        );
-
+    }
+);
 
 
 
@@ -273,29 +267,25 @@ async function invest(button){
                 amount,
 
 
-                activePlan:{
+               activePlan:{
 
-                    planName,
+                   planName,
 
-                    investmentAmount:
-                    amount,
+                   investmentAmount: amount,
 
+                   dailyProfit: dailyProfit,
 
-                    dailyProfit,
+                   totalProfit: 0,
 
+                   daysPaid: 0,
 
-                    totalProfit:0,
+                   duration: 30,
 
+                   status: "Active",
 
-                    status:
-                    "Active",
+                   startDate: new Date().toISOString()
 
-
-                    startDate:
-                    new Date()
-                    .toISOString()
-
-                }
+} 
 
             }
         );
